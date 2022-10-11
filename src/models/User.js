@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 export default class User extends Model {
   static init(sequelize) {
-    super.init({
+    return super.init({
       name: {
         type: Sequelize.STRING
       },

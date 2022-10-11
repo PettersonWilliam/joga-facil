@@ -82,10 +82,19 @@ class UserController {
 
                 return res.json(token);
             } catch (e) {
-                console.log(e);
                 return res.status(401).json('Dados inválidos');
             }
-    }
+        }
+
+        async show(req, res) {
+            try {
+                const user = await UserService.show(req.filter.id);
+               
+                return res.json(user);
+            } catch (e) {
+                return res.status(401).json(e.message);
+            }
+        }
 }
 
 

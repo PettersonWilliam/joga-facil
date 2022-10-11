@@ -15,6 +15,8 @@ export default class Position extends Model {
       sequelize,
       paranoid: true,
     });
+
+    return this;
   }
 
   static associate(models) {

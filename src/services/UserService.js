@@ -38,10 +38,27 @@ class UserService {
             where: {
                 id: userId,
                 deleted_at: null
-            }
+            },
+            paranoid: false
         });
 
         return true;
+    }
+
+    async show(id) {
+        const user = await User.findOne({
+            where: {
+                id,
+                deleted_at: null
+            },
+            paranoid: false,
+            attributes: ['name', 'email']
+        });
+
+        if (!user) {
+            throw new Error('usuario não existe.');
+        }
+            return user;
     }
 
     async login(filter) {

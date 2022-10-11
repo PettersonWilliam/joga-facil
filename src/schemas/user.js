@@ -22,12 +22,17 @@ module.exports = () => {
                 email: yup.string().email().nullable()
             }).noUnknown(),
             params: yup.object({
-                id: yup.number().required()
+                id: yup.number().required().min(1)
             })
         },
         delete : {
             params: yup.object({
-                id: yup.number().required()
+                id: yup.number().required().min(1)
+            }).noUnknown()
+        },
+        show : {
+            params: yup.object({
+                id: yup.number().required().min(1)
             }).noUnknown()
         }
     };

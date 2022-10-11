@@ -1,4 +1,4 @@
-const Validate = (schema) => async (req, res, next) => {
+const Validate = (schema) =>  (req, res, next) => {
     try {
       Object.keys(schema).forEach(key => {
           let reqKey = ['params', 'query'].includes(key) ? 'filter' : 'data';
@@ -10,9 +10,11 @@ const Validate = (schema) => async (req, res, next) => {
       });
 
       next();
+
     } catch(e) {
+      console.log(e, 'estou akiiiiiiiiiiiiiiiiiiiiiiiIIIIIIIIIIIIIIIIIIIIIII');
       return res.status(400).json({
-        errors: e.errors.map(err => err),
+        error: 'ERRO NO YUP'
       });
   }
 };

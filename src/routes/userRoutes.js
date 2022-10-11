@@ -8,9 +8,15 @@ const router = new Router();
 const userSchema = UserSchema();
 
 router.post('/', schemaValidator(userSchema.store), userController.store);
+
 router.post('/login', schemaValidator(userSchema.login), userController.login);
-router.get('/', loginRequired,schemaValidator(userSchema.index), userController.index);
+
+router.get('/', loginRequired, userController.index);
+
+router.get('/:id', loginRequired,schemaValidator(userSchema.show), userController.show);
+
 router.put('/:id', loginRequired, schemaValidator(userSchema.update), userController.update);
+
 router.delete('/:id', loginRequired, schemaValidator(userSchema.delete), userController.delete);
 
 export default router;

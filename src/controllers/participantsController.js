@@ -1,6 +1,6 @@
 import ParticipantsService from '../services/ParticipantsService';
 
-class PartcipantsController {
+class ParticipantsController {
     async store(req, res) {
         try {
             const participants = {
@@ -16,7 +16,8 @@ class PartcipantsController {
         } catch (e) {
             return res.status(400).json('Erro ao criar o participante.');
         }
-    },
+    }
+
     async index(req, res) {
         try {
             const participants = await ParticipantsService.index();
@@ -26,32 +27,33 @@ class PartcipantsController {
             return res.status(400).json('Erro ao listar participantes.');
         }
     }
+    async show(req, res) {
+        try {
+            const participant = await ParticipantsService.show(req.filter.id);
+           
+            return res.json(participant);
+        } catch (e) {
+            return res.status(401).json({ errors:  'participante não existe' });
+        }
+    }
+
     async update(req, res) {
         try {
-            const filter = {
-                id: req.filter.id
-            }
-            const changes = {};
-            
-            if (req.data.name) {
-                changes.name = req.data.name;
+            const options = {
+                filter: {
+                    id: req.filter.id
+                },
+                changes: req.data
             }
 
-            if (req.data.email) {
-                changes.email = req.data.email;
-            }
-
-            if (req.data.password) {
-                changes.password = req.data.password;
-            } 
-
-            const participants = await ParticipantsService.update(filter, changes);
+            const participants = await ParticipantsService.update(options);
             
             return res.json(participants)
         } catch(e) {
             return res.status(400).json('Erro ao atualizar paricipante.');
             }
     }
+
     async delete(req, res) {
         try {
             const { id } = req.filter;
@@ -65,8 +67,9 @@ class PartcipantsController {
             return res.json(userId);
         }   catch(e) {
                 return res.status(400).json('Erro ao deletar usuário.');
-            }
-    }     
+        }
+    }
+
 };
 
-export default new PartcipantsController();
+export default new ParticipantsController();

@@ -28,7 +28,7 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
-    
+
     await queryInterface.createTable('participants', {
       id: {
         type: Sequelize.INTEGER,

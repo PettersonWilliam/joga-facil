@@ -19,9 +19,12 @@ export default class Participants  extends Model {
       sequelize,
       paranoid: true,
     });
+
+    return this;
   }
 
   static associate(models) {
     this.hasMany(models.Position, { foreignKey: 'position_id' });
+    this.belongsToMany(models.Matchs, { through: models.MatchsParticipants, foreignKey: 'match_id', as: 'matches', otherKey: 'participant_id' });
   };
 }

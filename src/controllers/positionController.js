@@ -65,7 +65,16 @@ class PositionController {
             } catch(e) {
                 return res.status(400).json('Erro ao deletar posição.')
             }
-        } 
+        }
+        async show(req, res) {
+            try {
+                const position = await UserService.findOne(req.filter.id);
+               
+                return res.json(position);
+            } catch (e) {
+                return res.status(401).json(e.message);
+            }
+        }
     }
 
 export default new PositionController();

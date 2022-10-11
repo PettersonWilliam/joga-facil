@@ -8,8 +8,13 @@ const router = new Router();
 const participantsSchema = ParticipantsSchema();
 
 router.post('/', loginRequired, schemaValidator(participantsSchema.store), ParticipantsController.store);
-router.get('/', loginRequired, schemaValidator(participantsSchema.index), ParticipantsController.index);
+
+router.get('/', loginRequired, ParticipantsController.index);
+
+router.get('/:id', loginRequired, schemaValidator(participantsSchema.show), ParticipantsController.show);
+
 router.put('/:id', loginRequired, schemaValidator(participantsSchema.update), ParticipantsController.update);
+
 router.delete('/:id', loginRequired, schemaValidator(participantsSchema.delete), ParticipantsController.delete);
 
 

@@ -22,8 +22,24 @@ class PositionService {
             where: {
                 id,
                 deleted_at: null
-            }
+            },
+            paranoid: false
         });
+    }
+    async show(id) {
+        const position = await Position.findOne({
+            where: {
+                id,
+                deleted_at: null
+            },
+            paranoid: false,
+            attributes: ['name', 'email']
+        });
+
+        if (!position) {
+            throw new Error('posição não existe');
+        }
+            return position;
     }
 }
 export default new PositionService();
