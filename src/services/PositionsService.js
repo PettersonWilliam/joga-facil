@@ -9,6 +9,22 @@ class PositionService {
         return Position.findAll({ attributes: ['id', 'name'] });
     }
 
+    async show(id) {
+        const position = await Position.findOne({
+            where: {
+                id,
+                deleted_at: null
+            },
+            paranoid: false,
+            attributes: [ 'id', 'name']
+        });
+
+        if (!position) {
+            throw new Error('posição não existe');
+        }
+            return position;
+    }
+
     async update(filter, changes)  {
         return Position.update(changes, {
             where: {
@@ -26,20 +42,6 @@ class PositionService {
             paranoid: false
         });
     }
-    async show(id) {
-        const position = await Position.findOne({
-            where: {
-                id,
-                deleted_at: null
-            },
-            paranoid: false,
-            attributes: ['name', 'email']
-        });
-
-        if (!position) {
-            throw new Error('posição não existe');
-        }
-            return position;
-    }
+    
 }
 export default new PositionService();

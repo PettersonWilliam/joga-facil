@@ -7,6 +7,12 @@ module.exports = () => {
                 name: yup.string().required(),
             }).noUnknown()
         },
+        show: {
+            params: yup.object({
+                id: yup.number().required()
+            }).noUnknown(),
+
+        },
         update: {
             body: yup.object({
                 name: yup.string().nullable(),
@@ -18,7 +24,7 @@ module.exports = () => {
         delete : {
             params: yup.object({
                 id: yup.number().required()
-            }).noUnknown()
+            }).noUnknown(),
         }
     };
 

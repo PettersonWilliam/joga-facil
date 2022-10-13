@@ -1,4 +1,4 @@
-const Validate = (schema) =>  (req, res, next) => {
+const Validate = schema => (req, res, next) => {
     try {
       Object.keys(schema).forEach(key => {
           let reqKey = ['params', 'query'].includes(key) ? 'filter' : 'data';
@@ -11,10 +11,10 @@ const Validate = (schema) =>  (req, res, next) => {
 
       next();
 
-    } catch(e) {
-      console.log(e, 'estou akiiiiiiiiiiiiiiiiiiiiiiiIIIIIIIIIIIIIIIIIIIIIII');
+    } catch(error) {
       return res.status(400).json({
-        error: 'ERRO NO YUP'
+        code: 'ERRO_NO_YUP',
+        message: error.message
       });
   }
 };

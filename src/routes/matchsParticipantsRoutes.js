@@ -11,12 +11,12 @@ router.post('/', loginRequired, schemaValidator(matchsParticipantsSchema.store),
 
 router.get('/', loginRequired, matchParticipantsController.index);
 
-// router.get('/:id', loginRequired, schemaValidator(matchsSchema.show), matchController.show);
+router.get('/:id', loginRequired, schemaValidator(matchsParticipantsSchema.show), matchParticipantsController.show);
 
-// router.put('/:id', loginRequired, schemaValidator(matchsSchema.update), matchController.update);
+router.put('/:id', loginRequired, schemaValidator(matchsParticipantsSchema.update), matchParticipantsController.update);
 
 
-// router.delete('/:id', loginRequired, schemaValidator(matchsSchema.delete), matchController.delete);
+router.delete('/:id', loginRequired, schemaValidator(matchsParticipantsSchema.delete), matchParticipantsController.delete);
 
 
 export default router;

@@ -9,31 +9,30 @@ module.exports = () => {
                 is_confirmed: yup.boolean().required(),
                 gols: yup.number().required(),
                 rate: yup.number().required()
-            }).noUnknown()
+            }).noUnknown(),
         },
-        // show : {
-        //     params: yup.object({
-        //         id: yup.number().required()
-        //     }).noUnknown()
-        // },
-        // update: {
-        //     body: yup.object({
-        //         date: yup.date().required(),
-        //         status: yup.string().required(),
-        //         started_at: yup.date().required(),
-        //         end_at: yup.string().nullable(),
-        //         team_amount: yup.number().integer().required()
-        //     }).noUnknown(),
-        //     params: yup.object({
-        //         id: yup.number().required()
-        //     }).noUnknown()
-        // },
-        // delete : {
-        //     params: yup.object({
-        //         id: yup.number().required()
-        //     }).noUnknown()
-        // },
-     
+        show: {
+            params: yup.object({
+                id: yup.number().required(),
+            }).noUnknown(),
+        },
+        update: {
+            body: yup.object({
+                match_id: yup.number().required(),
+                participant_id: yup.number().required(),
+                is_confirmed: yup.boolean().required(),
+                gols: yup.number().required(),
+                rate: yup.number().required()
+            }).noUnknown(),
+            params: yup.object({
+                id: yup.number().required()
+            }).noUnknown(),
+        },
+        delete : {
+            params: yup.object({
+                id: yup.number().required()
+            }).noUnknown(),
+        },
     };
 
     return schema;

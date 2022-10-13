@@ -5,40 +5,44 @@ class MatchsParticipantsService {
       return MatchsParticipants.create(data);
     }
     index() {
-      return MatchsParticipants.findAll({ attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate', ] });
+      return MatchsParticipants.findAll({ 
+        attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate', ] 
+      });
   }
-//     async show(id) {
-//     const matchParticipant = await MatchsParticipants.findOne({
-//         where: {
-//             id,
-//             deleted_at: null
-//         },
-//         paranoid: false,
-//         attributes: ['id','date', 'status','started_at','end_at','team_amount']
-//     });
+    async show(id) {
+    const matchParticipant = await MatchsParticipants.findOne({
+        where: {
+            id,
+            deleted_at: null
+        },
+        paranoid: false,
+        attributes:[ 'id','match_id', 'participant_id','is_confirmed','gols','rate']
+    }); 
 
-//     if (!matchParticipant) {
-//         throw new Error('RELACIONAMENTO não existE.');
-//     }
-//         return matchParticipant;
-// }
-//   async update({ filter, changes })  {
-//     return Matchs.update(changes, {
-//         where: {
-//             id: filter.id
-//         }
-//     });
-//   }
-//   async delete(id) {
-//     await Matchs.destroy({
-//         where: {
-//             id,
-//             deleted_at: null
-//         },
-//         paranoid: false
-//     });
+    if (!matchParticipant) {
+        throw new Error('ID DO RELACIONAMENTO não existE.');
+    }
+        return matchParticipant;
+}
+  async update({ filter, changes })  {
+    return MatchsParticipants.update(changes, {
+      where: {
+        ...filter
+      },
+      attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate'],
+    });
+  }
 
-//     return true;
-//   }
+  async delete(id) {
+    await MatchsParticipants.destroy({
+        where: {
+          ...filter
+        },
+        attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate'],
+
+    });
+
+    return true;
+  }
 }
 export default new MatchsParticipantsService();

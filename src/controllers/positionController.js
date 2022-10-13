@@ -25,6 +25,17 @@ class PositionController {
         }
     }
 
+    async show(req, res) {
+        try {
+            const position = await PositionsService.show(req.filter.id);
+           
+            return res.json(position);
+        } catch (e) {
+            console.log(e,'petterson');
+            return res.status(401).json('erro ao listar posição desejada ');
+        }
+    }
+
     async update(req, res) {
         try {
             const filter = {
@@ -48,9 +59,10 @@ class PositionController {
             
             return res.json(position)
             } catch(e) {
-            return res.status(400).json('Erro ao atualizar usuário.');
+            return res.status(400).json('Erro ao atualizar Posição.');
         }
     }
+
         async delete(req, res) {
             try {
                 const { id } = req.filter;
@@ -66,15 +78,7 @@ class PositionController {
                 return res.status(400).json('Erro ao deletar posição.')
             }
         }
-        async show(req, res) {
-            try {
-                const position = await UserService.findOne(req.filter.id);
-               
-                return res.json(position);
-            } catch (e) {
-                return res.status(401).json(e.message);
-            }
-        }
-    }
+        
+}
 
 export default new PositionController();

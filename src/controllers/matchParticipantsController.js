@@ -9,6 +9,7 @@ class MatchParticipantsController {
 
             return res.json({ match_id, participant_id, is_confirmed, gols, rate });
         } catch (e) {
+            console.log(e);
             return res.status(400).json('Erro ao criar RELACIONAMENTO.');
         }
     }
@@ -19,53 +20,51 @@ class MatchParticipantsController {
                 
             return res.json(matchsParticipants)
         } catch(e) {
-            console.log(e);
             return res.status(400).json('Erro ao listar TodosRELACIONAMENTOS.');
         }
     }
 
-    // async show(req, res) {
-    //     try {
-    //         const match = await MatchsService.show(req.filter.id);
+    async show(req, res) {
+        try {
+            const matchParticipant = await MatchsParticipantsService.show(req.filter.id);
            
-    //         return res.json(match);
-    //     } catch (e) {
-    //         return res.status(401).json({ errors:  'partida não existe' });
-    //     }
-    // }     
+            return res.json(matchParticipant);
+        } catch (e) {
+            return res.status(400).json({ errors:  'ID DO RELACINAMENTO NÃO EXISTE' });
+        }
+    }     
     
-    // async update(req, res) {
-    //     try {
-    //         const options = {
-    //             filter: {
-    //                 id: req.filter.id
-    //             },
-    //             changes: req.data
-    //         }
+    async update(req, res) {
+        try {
+            const filter = {
+                    id: req.filter.id
+                };
+               const changes = req.data;
 
-    //         const matchs = await MatchsService.update(options);
+           await MatchsParticipantsService.update(filter, changes);
             
-    //         return res.json(matchs)
-    //     } catch(e) {
-    //         return res.status(400).json('Erro ao atualizar partida.');
-    //         }
-    // }
+            return res.json(changes)
+        } catch(e) {
+            console.log(e);
+            return res.status(400).json('Erro ao atualizar matchsParticipants.');
+            }
+    }
 
-    // async delete(req, res) {
-    //     try {
-    //         const { id } = req.filter;
+    async delete(req, res) {
+        try {
+            const { id } = req.filter;
 
-    //         if (!id) {
-    //             return res.json('ID não existe')
-    //         }
+            if (!id) {
+                return res.json('ID não existe')
+            }
 
-    //         const userId = await MatchsService.delete(id);
+            const userId = await MatchsParticipantsService.delete(id);
 
-    //         return res.json(userId);
-    //     }   catch(e) {
-    //             return res.status(400).json('Erro ao deletar usuário.');
-    //     }
-    // }
+            return res.json(userId);
+        }   catch(e) {
+                return res.status(400).json('Erro ao deletar Matchs Participants.');
+        }
+    }
 
 };
 

@@ -9,6 +9,7 @@ const positionSchema = PositionSchema();
 
 router.post('/',loginRequired, schemaValidator(positionSchema.store), PositionController.store);
 router.get('/', loginRequired, PositionController.index);
+router.get('/:id', loginRequired, schemaValidator(positionSchema.show), PositionController.show);
 router.put('/:id', loginRequired, schemaValidator(positionSchema.update), PositionController.update);
 router.delete('/:id', loginRequired, schemaValidator(positionSchema.delete), PositionController.delete);
 
