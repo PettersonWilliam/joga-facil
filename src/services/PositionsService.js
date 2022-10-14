@@ -1,47 +1,46 @@
-import Position from '../models/Position';
+import Position from "../models/Position";
 
 class PositionService {
-    async create(position) {
-        return Position.create(position)
-    }
+  async create(position) {
+    return Position.create(position);
+  }
 
-    index() {
-        return Position.findAll({ attributes: ['id', 'name'] });
-    }
+  index() {
+    return Position.findAll({ attributes: ["id", "name"] });
+  }
 
-    async show(id) {
-        const position = await Position.findOne({
-            where: {
-                id,
-                deleted_at: null
-            },
-            paranoid: false,
-            attributes: [ 'id', 'name']
-        });
+  async show(id) {
+    const position = await Position.findOne({
+      where: {
+        id,
+        deleted_at: null,
+      },
+      paranoid: false,
+      attributes: ["id", "name"],
+    });
 
-        if (!position) {
-            throw new Error('posição não existe');
-        }
-            return position;
+    if (!position) {
+      throw new Error("posição não existe");
     }
+    return position;
+  }
 
-    async update(filter, changes)  {
-        return Position.update(changes, {
-            where: {
-                id: filter.id
-            }
-        });
-    }
-        
-    async delete(id) {
-        await Position.destroy({
-            where: {
-                id,
-                deleted_at: null
-            },
-            paranoid: false
-        });
-    }
-    
+  async update(filter, changes) {
+    return Position.update(changes, {
+      where: {
+        id: filter.id,
+      },
+    });
+  }
+
+  async delete(id) {
+    await Position.destroy({
+      where: {
+        id,
+        deleted_at: null,
+      },
+      paranoid: false,
+    });
+  }
 }
 export default new PositionService();

@@ -1,101 +1,99 @@
-import UserService from '../services/UserService';
+import UserService from "../services/UserService";
 
 class UserController {
-        async store(req, res) {
-            try {
-                const data = {
-                    name: req.data.name,
-                    password: req.data.password,
-                    email: req.data.email
-                };
+  async store(req, res) {
+    try {
+      const data = {
+        name: req.data.name,
+        password: req.data.password,
+        email: req.data.email,
+      };
 
-                const { id, name, email } = await UserService.create(data);
+      const { id, name, email } = await UserService.create(data);
 
-                return res.json({ id, name, email });
-            } catch (e) {
-                return res.status(400).json('Erro ao criar o usuário.');
-            }
-        }
-    
-        async index(req, res) {
-            try {
-                const user = await UserService.index();
-                
-                return res.json(user)
-                } catch(e) {
-                return res.status(400).json('Erro ao listar usuário.');
-            }
-        }
+      return res.json({ id, name, email });
+    } catch (e) {
+      return res.status(400).json("Erro ao criar o usuário.");
+    }
+  }
 
-        async update(req, res) {
-            try {
-                const filter = {
-                    id: req.params.id
-                }
-                const changes = {};
-                
-                if (req.body.name) {
-                    changes.name = req.body.name;
-                }
+  async index(req, res) {
+    try {
+      const user = await UserService.index();
 
-                if (req.body.email) {
-                    changes.email = req.body.email;
-                }
+      return res.json(user);
+    } catch (e) {
+      return res.status(400).json("Erro ao listar usuário.");
+    }
+  }
 
-                if (req.body.password) {
-                    changes.password = req.body.password;
-                } 
+  async update(req, res) {
+    try {
+      const filter = {
+        id: req.params.id,
+      };
+      const changes = {};
 
-                const user = await UserService.update(filter, changes);
-                
-                return res.json(user)
-                } catch(e) {
-                return res.status(400).json('Erro ao atualizar usuário.');
-            }
-        }
+      if (req.body.name) {
+        changes.name = req.body.name;
+      }
 
-        async delete(req, res) {
-            try {
-                const { id } = req.filter;
+      if (req.body.email) {
+        changes.email = req.body.email;
+      }
 
-                if (!id) {
-                    return res.json('ID não existe')
-                }
+      if (req.body.password) {
+        changes.password = req.body.password;
+      }
 
-                const userId = await UserService.delete(id);
+      const user = await UserService.update(filter, changes);
 
-                return res.json(userId);
-            } catch(e) {
+      return res.json(user);
+    } catch (e) {
+      return res.status(400).json("Erro ao atualizar usuário.");
+    }
+  }
 
-                return res.status(400).json('Erro ao deletar usuário.');
-            }
-        }
+  async delete(req, res) {
+    try {
+      const { id } = req.filter;
 
-        async login(req, res) {
-            try {
-                const data = {
-                    password: req.data.password,
-                    email: req.data.email
-                };
+      if (!id) {
+        return res.json("ID não existe");
+      }
 
-                const token = await UserService.login(data);
+      const userId = await UserService.delete(id);
 
-                return res.json(token);
-            } catch (e) {
-                return res.status(401).json('Dados inválidos');
-            }
-        }
+      return res.json(userId);
+    } catch (e) {
+      return res.status(400).json("Erro ao deletar usuário.");
+    }
+  }
 
-        async show(req, res) {
-            try {
-                const user = await UserService.show(req.filter.id);
-               
-                return res.json(user);
-            } catch (e) {
-                return res.status(401).json(e.message);
-            }
-        }
+  async login(req, res) {
+    try {
+      const data = {
+        password: req.data.password,
+        email: req.data.email,
+      };
+
+      const token = await UserService.login(data);
+
+      return res.json(token);
+    } catch (e) {
+      return res.status(401).json("Dados inválidos");
+    }
+  }
+
+  async show(req, res) {
+    try {
+      const user = await UserService.show(req.filter.id);
+
+      return res.json(user);
+    } catch (e) {
+      return res.status(401).json(e.message);
+    }
+  }
 }
-
 
 export default new UserController();

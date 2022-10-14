@@ -9,15 +9,20 @@ class MatchsService {
   index() {
     return Matchs.findAll({
       attributes: ['id','date', 'status','started_at','end_at','team_amount'],
+      logging: true,
       include: {
         as: 'participants',
         model: Participants
-      }
+      },
+      where: {
+        deleted_at: null
+      },
+      paranoid: false
     });
   }
 
   async show(id) {
-    const match = await Matchs.findAll({
+    const match = await Matchs.findOne({
         where: {
           id,
           deleted_at: null
@@ -34,22 +39,25 @@ class MatchsService {
     if (!match) {
       throw new Error('partida não existente.');
     }
-      return match;
+
+    return match;
   }
 
   async update({ filter, changes })  {
     return Matchs.update(changes, {
         where: {
-            id: filter.id
-        }
+          id: filter.id,
+          deleted_at: null
+        },
+        paranoid: false
     });
   }
 
   async delete(id) {
     await Matchs.destroy({
         where: {
-            id,
-            deleted_at: null
+          id,
+          deleted_at: null
         },
         paranoid: false
     });
