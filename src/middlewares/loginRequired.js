@@ -1,16 +1,16 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import jwt from "jsonwebtoken";
+import User from "../models/User";
 
 export default async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
     return res.status(401).json({
-      errors: ['Login required'],
+      errors: ["Login required"],
     });
   }
 
-  const [, token] = authorization.split(' ');
+  const [, token] = authorization.split(" ");
 
   try {
     const dados = jwt.verify(token, process.env.TOKEN_SECRET);
@@ -25,17 +25,16 @@ export default async (req, res, next) => {
 
     if (!user) {
       return res.status(401).json({
-        errors: ['Usuario invalido.'],
+        errors: ["Usuario invalido."],
       });
     }
 
     req.userId = id;
     req.userEmail = email;
     next();
-
   } catch (e) {
     return res.status(401).json({
-      errors: ['Token expirado ou invalido.'],
+      errors: ["Token expirado ou invalido."],
     });
   }
 };

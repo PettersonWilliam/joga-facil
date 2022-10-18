@@ -43,7 +43,7 @@ class MatchsService {
     return match;
   }
 
-  async update({ filter, changes })  {
+  async update({ filter, changes }) {
     return Matchs.update(changes, {
         where: {
           id: filter.id,

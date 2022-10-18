@@ -1,13 +1,10 @@
 import UserService from "../services/UserService";
+import { pick } from 'lodash';
 
 class UserController {
   async store(req, res) {
     try {
-      const data = {
-        name: req.data.name,
-        password: req.data.password,
-        email: req.data.email,
-      };
+      const data = pick(req.data, ['name', 'password','email']);
 
       const { id, name, email } = await UserService.create(data);
 
@@ -29,22 +26,8 @@ class UserController {
 
   async update(req, res) {
     try {
-      const filter = {
-        id: req.params.id,
-      };
-      const changes = {};
-
-      if (req.body.name) {
-        changes.name = req.body.name;
-      }
-
-      if (req.body.email) {
-        changes.email = req.body.email;
-      }
-
-      if (req.body.password) {
-        changes.password = req.body.password;
-      }
+      const filter =  pick(req.filter,['id']);
+      const changes = pick(req.data, ['name', 'email']);
 
       const user = await UserService.update(filter, changes);
 
@@ -58,10 +41,6 @@ class UserController {
     try {
       const { id } = req.filter;
 
-      if (!id) {
-        return res.json("ID não existe");
-      }
-
       const userId = await UserService.delete(id);
 
       return res.json(userId);
@@ -72,10 +51,7 @@ class UserController {
 
   async login(req, res) {
     try {
-      const data = {
-        password: req.data.password,
-        email: req.data.email,
-      };
+      const data = pick(req.data, ['password','email'])
 
       const token = await UserService.login(data);
 

@@ -6,6 +6,9 @@ module.exports = () => {
       body: yup
         .object({
           name: yup.string().required(),
+          born: yup.date().nullable(),
+          number: yup.number().nullable(),
+          position_id: yup.number().nullable(),
         })
         .noUnknown(),
     },

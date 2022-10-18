@@ -6,6 +6,7 @@ module.exports = () => {
       body: yup
         .object({
           name: yup.string().required(),
+          id: yup.number().nullable(),
         })
         .noUnknown(),
     },

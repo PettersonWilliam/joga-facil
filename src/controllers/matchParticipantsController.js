@@ -1,16 +1,15 @@
 import MatchsParticipantsService from "../services/MatchsParticipantsService";
+import { pick } from 'lodash';
 
 class MatchParticipantsController {
   async store(req, res) {
     try {
-      const matchParticipantsData = req.data;
+      const matchParticipants = pick(req.data, ['match_id','participant_id','is_confirmed','gols','rate']);
 
-      const { match_id, participant_id, is_confirmed, gols, rate } =
-        await MatchsParticipantsService.create(matchParticipantsData);
+        await MatchsParticipantsService.create(matchParticipants);
 
-      return res.json({ match_id, participant_id, is_confirmed, gols, rate });
+      return res.json(matchParticipants);
     } catch (e) {
-      console.log(e);
       return res.status(400).json("Erro ao criar RELACIONAMENTO.");
     }
   }
@@ -39,16 +38,17 @@ class MatchParticipantsController {
 
   async update(req, res) {
     try {
-      const filter = {
-        id: req.filter.id,
-      };
-      const changes = req.data;
+      const options = {
+       filter: pick(req.filter,['id']),
+       changes: pick(req.data,['match_id','participant_id','is_confirmed','gols','rate'])
+      }
 
-      await MatchsParticipantsService.update(filter, changes);
+      await MatchsParticipantsService.update(options);
 
-      return res.json(changes);
+
+      return res.json(true);
     } catch (e) {
-      console.log(e);
+      console.log(e)
       return res.status(400).json("Erro ao atualizar matchsParticipants.");
     }
   }
@@ -58,14 +58,14 @@ class MatchParticipantsController {
       const { id } = req.filter;
 
       if (!id) {
-        return res.json("ID não existe");
+        return res.json("nao exite nenhuma partida vinculada ao participante");
       }
 
       const userId = await MatchsParticipantsService.delete(id);
 
       return res.json(userId);
     } catch (e) {
-      return res.status(400).json("Erro ao deletar Matchs Participants.");
+      return res.status(400).json("Error, Matchs Participants nao existe.");
     }
   }
 }

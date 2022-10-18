@@ -1,17 +1,15 @@
 import PositionsService from "../services/PositionsService";
+import { pick } from 'lodash';
 
 class PositionController {
   async store(req, res) {
     try {
-      const position = {
-        name: req.data.name,
-      };
+      const position = pick(req.data, ['name']);
 
-      const { id, name } = await PositionsService.create(position);
-
-      return res.json({ id, name });
+      const { name } = await PositionsService.create(position)
     } catch (e) {
-      return res.status(400).json("Erro ao criar posição.");
+      console.log(e, 'CONSOLE.LOG()');
+      return res.status(400).json('Erro ao criar posição.');
     }
   }
 
@@ -37,22 +35,8 @@ class PositionController {
 
   async update(req, res) {
     try {
-      const filter = {
-        id: req.filter.id,
-      };
-      const changes = {};
-
-      if (req.data.name) {
-        changes.name = req.data.name;
-      }
-
-      if (req.data.email) {
-        changes.email = req.data.email;
-      }
-
-      if (req.data.password) {
-        changes.password = req.data.password;
-      }
+      const filter =  pick(req.filter, ['id']);
+      const changes =  pick(req.data, ['name', 'email', 'password']);
 
       const position = await PositionsService.update(filter, changes);
 

@@ -25,6 +25,7 @@ class ParticipantsService {
     }
 
     async update({ filter, changes })  {
+        
         return Participants.update(changes, {
             where: {
                 id: filter.id,

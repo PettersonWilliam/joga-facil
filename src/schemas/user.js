@@ -7,6 +7,7 @@ module.exports = () => {
         .object({
           name: yup.string().required(),
           password: yup.string().min(6).required(),
+          confirm_password: yup.string().min(6).required().oneOf([yup.ref('password')], 'Senhas não combinam'),
           email: yup.string().email().required(),
         })
         .noUnknown(),

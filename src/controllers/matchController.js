@@ -1,14 +1,14 @@
 import MatchsService from "../services/MatchsService";
+import { pick } from 'lodash'; 
 
 class MatchController {
   async store(req, res) {
     try {
-      const matchData = req.data;
+      const matchCreated = await MatchsService.create(req.data);
 
-      const { id, date, status, started_at, end_at, team_amount } =
-        await MatchsService.create(matchData);
+      const novoObjeto = pick(matchCreated, ['id', 'date', 'status', 'started_at', 'end_at', 'team_amount']); //  aplicar ao meu codigo lodash pick
 
-      return res.json({ id, date, status, started_at, end_at, team_amount });
+      return res.json(novoObjeto);
     } catch (e) {
       return res.status(400).json("Erro ao criar partida.");
     }
@@ -30,7 +30,6 @@ class MatchController {
 
       return res.json(match);
     } catch (e) {
-      console.log(e);
 
       return res.status(401).json({ errors: "partida não existe" });
     }
@@ -38,15 +37,12 @@ class MatchController {
 
   async update(req, res) {
     try {
-      const options = {
-        filter: {
-          id: req.filter.id,
-        },
-        changes: req.data,
-      };
+      const filter = pick(req.filter,['id']);
+      const changes = pick(req.data, ['date', 'status','started_at', 'end_at', 'team_amount']);
+
+      const options = { filter, changes };
 
       const matchs = await MatchsService.update(options);
-
       return res.json(matchs);
     } catch (e) {
       return res.status(400).json("Erro ao atualizar partida.");
@@ -55,11 +51,8 @@ class MatchController {
 
   async delete(req, res) {
     try {
-      const { id } = req.filter;
-
-      if (!id) {
-        return res.json("ID não existe");
-      }
+      // const { id } = req.filter;
+      const filter =  pick(req.filter, ['id'])
 
       const userId = await MatchsService.delete(id);
 
@@ -70,4 +63,4 @@ class MatchController {
   }
 }
 
-export default new MatchController();
+export default new MatchController()

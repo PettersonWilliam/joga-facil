@@ -25,13 +25,13 @@ class UserService {
         if (changes.password) {
             changes.password = await bcrypt.hash(changes.password, 6);
         }
-
-        return User.update(changes, {
+        return User.update(changes,   {
             where: {
                 id: filter.id
             }
         });
     }
+
 
     async delete(userId) {
         await User.destroy({

@@ -1,17 +1,12 @@
 import ParticipantsService from "../services/ParticipantsService";
+import { pick } from 'lodash';
 
 class ParticipantsController {
   async store(req, res) {
     try {
-      const participants = {
-        name: req.data.name,
-        born: req.data.born,
-        number: req.data.number,
-        position_id: req.data.position_id,
-      };
+      const data = pick(req.data, ['name','born','number','position_id']);
 
-      const { id, name, born, number, position_id } =
-        await ParticipantsService.create(participants);
+      const { id, name, born, number, position_id } = await ParticipantsService.create(data);
 
       return res.json({ id, name, born, number, position_id });
     } catch (e) {
@@ -42,22 +37,20 @@ class ParticipantsController {
   async update(req, res) {
     try {
       const options = {
-        filter: {
-          id: req.filter.id,
-        },
-        changes: req.data,
-      };
-
+        filter: pick(req.filter, ['id']),
+        changes: pick(req.data, ['name','born','number','position_id'])
+        }
       const participants = await ParticipantsService.update(options);
 
       return res.json(participants);
     } catch (e) {
       return res.status(400).json("Erro ao atualizar paricipante.");
     }
-  }
+  },
 
   async delete(req, res) {
     try {
+      
       const { id } = req.filter;
 
       if (!id) {

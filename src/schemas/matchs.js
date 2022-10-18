@@ -8,8 +8,8 @@ module.exports = () => {
           date: yup.date().required(),
           status: yup.string().required(),
           started_at: yup.date().required(),
-          end_at: yup.string().nullable(),
-          team_amount: yup.number().integer().required(),
+          end_at: yup.string().required(),
+          team_amount: yup.number().required(),
         })
         .noUnknown(),
     },
@@ -26,8 +26,8 @@ module.exports = () => {
           date: yup.date().required(),
           status: yup.string().required(),
           started_at: yup.date().required(),
-          end_at: yup.string().nullable(),
-          team_amount: yup.number().integer().required(),
+          end_at: yup.string().required(),
+          team_amount: yup.number().required(),
         })
         .noUnknown(),
       params: yup

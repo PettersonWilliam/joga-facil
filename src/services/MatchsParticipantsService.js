@@ -38,8 +38,7 @@ class MatchsParticipantsService {
         where: {
           ...filter
         },
-        attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate'],
-
+        attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate']
     });
 
     return true;
