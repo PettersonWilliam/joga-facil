@@ -1,11 +1,12 @@
 import { Router } from 'express';
-import userController from '../controllers/userController';
+import UserController from '../controllers/userController';
 import UserSchema from '../schemas/user';
 import schemaValidator from '../middlewares/schemaValidator';
 import loginRequired from '../middlewares/loginRequired';
 
 const router = new Router();
 const userSchema = UserSchema();
+const userController = new UserController();
 
 router.post('/', schemaValidator(userSchema.store), userController.store);
 

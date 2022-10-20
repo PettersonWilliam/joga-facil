@@ -1,15 +1,25 @@
+import BaseController from "./base";
 import PositionsService from "../services/PositionsService";
 import { pick } from 'lodash';
 
-class PositionController {
+class PositionController extends BaseController {
+  constructor() {
+    super();
+
+    this.bindActions(['store','index','show','update','delete']);
+  }
+
   async store(req, res) {
     try {
       const position = pick(req.data, ['name']);
 
       const { name } = await PositionsService.create(position)
+
+      return this.handleResponse({ name } , res);
     } catch (e) {
-      console.log(e, 'CONSOLE.LOG()');
-      return res.status(400).json('Erro ao criar posição.');
+      return this.handleError({
+        message:'Erro ao criar posição.'
+      },req, res);
     }
   }
 

@@ -1,7 +1,14 @@
+import BaseController from './base';
 import MatchsService from "../services/MatchsService";
-import { pick } from 'lodash'; 
+import { pick } from 'lodash';
 
-class MatchController {
+class MatchController extends BaseController {
+  constructor() {
+    super();
+
+    this.bindActions(['store','index','show','update','delete']);
+  }
+
   async store(req, res) {
     try {
       const matchCreated = await MatchsService.create(req.data);

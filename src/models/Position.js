@@ -28,6 +28,6 @@ export default class Position extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Participants, { foreignKey: "position_id" });
+    this.hasMany(models.Participants, { foreignKey: "position_id" });
   }
 }

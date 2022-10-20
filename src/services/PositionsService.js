@@ -1,14 +1,11 @@
 import Position from "../models/Position";
 
 class PositionService {
-//   async create(position) { // Deixa
-    
-//     const Full = await Position.create(position);
+  async create(position) {
+    const createdPosition = await Position.create(position);
 
-//     console.log(Full);
-
-//     return Full;
-//   }
+    return createdPosition;
+  }
 
   index() {
     return Position.findAll({ attributes: ["id", "name"] })

@@ -1,7 +1,13 @@
+import BaseController from './base';
 import ParticipantsService from "../services/ParticipantsService";
 import { pick } from 'lodash';
 
-class ParticipantsController {
+class ParticipantsController extends BaseController {
+  constructor() {
+    super();
+
+    this.bindActions(['store','index','show','update','delete']);
+  }
   async store(req, res) {
     try {
       const data = pick(req.data, ['name','born','number','position_id']);

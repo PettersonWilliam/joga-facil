@@ -1,7 +1,14 @@
+import BaseController from './base';
 import MatchsParticipantsService from "../services/MatchsParticipantsService";
 import { pick } from 'lodash';
 
-class MatchParticipantsController {
+
+class MatchParticipantsController extends BaseController {
+  constructor() {
+    super();
+
+    this.bindActions(['store','index','show','update','delete']);
+  }
   async store(req, res) {
     try {
       const matchParticipants = pick(req.data, ['match_id','participant_id','is_confirmed','gols','rate']);

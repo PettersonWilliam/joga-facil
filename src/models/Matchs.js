@@ -24,10 +24,7 @@ export default class Matchs extends Model {
         sequelize,
         paranoid: true,
         timestamps: true,
-        sequelize: sequelize,
-        createdAt: "created_at",
-        updatedAt: "updated_at",
-        deletedAt: "deleted_at",
+        sequelize: sequelize
       }
     );
 
