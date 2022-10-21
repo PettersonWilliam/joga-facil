@@ -1,22 +1,20 @@
-import { Router } from 'express';
-import matchParticipantsController from '../controllers/matchParticipantsController';
-import MatchsParticipantSchema from '../schemas/matchsParticipants';
-import schemaValidator from '../middlewares/schemaValidator';
-import loginRequired from '../middlewares/loginRequired';
+import BaseController from './base';
+import MatchsParticipantsService from '../services/matchsParticipantsService';
+import { pick } = from 'lodash';
 
-const router = new Router();
-const matchsParticipantsSchema = MatchsParticipantSchema();
+export default class MatchsParticipantsRoutes extends BaseController {
+    constructor() {
+        super();
 
-router.post('/', loginRequired, schemaValidator(matchsParticipantsSchema.store), matchParticipantsController.store);
-
-router.get('/', loginRequired, matchParticipantsController.index);
-
-router.get('/:id', loginRequired, schemaValidator(matchsParticipantsSchema.show), matchParticipantsController.show);
-
-router.put('/:id', loginRequired, schemaValidator(matchsParticipantsSchema.update), matchParticipantsController.update);
-
-
-router.delete('/:id', loginRequired, schemaValidator(matchsParticipantsSchema.delete), matchParticipantsController.delete);
+        this.matchsParticipantsSchema = MatchsParticipantsSchema();
+        this.matchsParticipantsController = new MatchsParticipantsController();
+    }
+}
+this.router.post('/', this.loginRequired, this.schemaValidator(this.matchsParticipantsSchema.store), this.matchParticipantsController.store);
+this.router.get('/', this.loginRequired, this.matchParticipantsController.index);
+this.router.get('/:id', this.loginRequired, this.schemaValidator(this.matchsParticipantsSchema.show), this.matchParticipantsController.show);
+this.router.put('/:id', this.loginRequired, this.schemaValidator(this.matchsParticipantsSchema.update), this.matchParticipantsController.update);
+this.router.delete('/:id', this.loginRequired, this.schemaValidator(this.matchsParticipantsSchema.delete), this.matchParticipantsController.delete);
 
 
-export default router;
+return this.router;

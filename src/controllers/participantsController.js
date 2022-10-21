@@ -72,4 +72,4 @@ class ParticipantsController extends BaseController {
   }
 }
 
-export default new ParticipantsController();
+export default ParticipantsController;

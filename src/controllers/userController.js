@@ -23,7 +23,7 @@ class UserController extends BaseController {
       const { id, name, email } = await UserService.create(data);
 
       return this.handleResponse({ id, name, email }, res);
-    } catch (e) 
+    } catch (e) {
       return this.handleError({
         message: 'Erro ao criar usuário.'
       }, req, res);

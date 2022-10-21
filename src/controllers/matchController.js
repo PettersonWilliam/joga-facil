@@ -58,7 +58,6 @@ class MatchController extends BaseController {
 
   async delete(req, res) {
     try {
-      // const { id } = req.filter;
       const filter =  pick(req.filter, ['id'])
 
       const userId = await MatchsService.delete(id);

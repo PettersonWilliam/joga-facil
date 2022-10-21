@@ -1,21 +1,25 @@
-import { Router } from 'express';
+import BaseRoutes from './base';
+import ParticipantSchema from '../schemas/participants';
 import ParticipantsController from '../controllers/participantsController';
-import ParticipantsSchema from '../schemas/participants';
-import schemaValidator from '../middlewares/schemaValidator';
-import loginRequired from '../middlewares/loginRequired';
 
-const router = new Router();
-const participantsSchema = ParticipantsSchema();
+export default class ParticipantsRoutes extends BaseRoutes {
+    constructor() {
+        super();
 
-router.post('/', loginRequired, schemaValidator(participantsSchema.store), ParticipantsController.store);
+        this.participantsSchema = ParticipantSchema();
 
-router.get('/', loginRequired, ParticipantsController.index);
-
-router.get('/:id', loginRequired, schemaValidator(participantsSchema.show), ParticipantsController.show);
-
-router.put('/:id', loginRequired, schemaValidator(participantsSchema.update), ParticipantsController.update);
-
-router.delete('/:id', loginRequired, schemaValidator(participantsSchema.delete), ParticipantsController.delete);
+        this.ParticipantsController = new ParticipantsController();
+    }
 
 
-export default router;
+    setup() {
+
+        this.router.post('/', this.loginRequired, this.SchemaValidator(this.participantsSchema.store), this.ParticipantsController.store);
+        this.router.get('/', this.loginRequired, this.ParticipantsController.index);
+        this.router.get('/:id', this.loginRequired, this.SchemaValidator(this.participantsSchema.show), this.ParticipantsController.show);
+        this.router.put('/:id', this.loginRequired, this.SchemaValidator(this.participantsSchema.update), this.ParticipantsController.update);
+        this.router.delete('/:id', this.loginRequired, this.SchemaValidator(this.participantsSchema.delete), this.ParticipantsController.delete);
+
+        return this.router;
+    }
+}

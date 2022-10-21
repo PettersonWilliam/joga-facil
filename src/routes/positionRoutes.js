@@ -1,16 +1,24 @@
-import { Router } from 'express';
-import PositionController from '../controllers/positionController';
+import BaseRoutes from './base';
 import PositionSchema from '../schemas/position';
-import schemaValidator from '../middlewares/schemaValidator';
-import loginRequired from '../middlewares/loginRequired';
+import PositionController from '../controllers/positionController';
 
-const router = new Router();
-const positionSchema = PositionSchema();
+export default class PositionRoutes extends BaseRoutes {
+    constructor() {
+        super();
 
-router.post('/',loginRequired, schemaValidator(positionSchema.store), PositionController.store);
-router.get('/', loginRequired, PositionController.index);
-router.get('/:id', loginRequired, schemaValidator(positionSchema.show), PositionController.show);
-router.put('/:id', loginRequired, schemaValidator(positionSchema.update), PositionController.update);
-router.delete('/:id', loginRequired, schemaValidator(positionSchema.delete), PositionController.delete);
+        this.positionSchema = PositionSchema();
+        
+        this.positionController = new PositionController();
+    }
 
-export default router;
+    setup() {
+        this.router.post('/',this.loginRequired, this.SchemaValidator(this.positionSchema.store), this.positionController.store);
+        this.router.get('/', this.loginRequired, this.positionController.index);
+        this.router.get('/:id', this.loginRequired, this.SchemaValidator(this.positionSchema.show), this.positionController.show);
+        this.router.put('/:id', this.loginRequired, this.SchemaValidator(this.positionSchema.update), this.positionController.update);
+        this.router.delete('/:id', this.loginRequired, this.SchemaValidator(this.positionSchema.delete), this.positionController.delete);
+    
+
+        return this.router;
+    }
+}

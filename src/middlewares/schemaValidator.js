@@ -1,4 +1,4 @@
-const Validate = (schema) => (req, res, next) => {
+const SchemaValidator = (schema) => (req, res, next) => {
   try {
     Object.keys(schema).forEach((key) => {
       let reqKey = ["params", "query"].includes(key) ? "filter" : "data";
@@ -18,4 +18,4 @@ const Validate = (schema) => (req, res, next) => {
   }
 };
 
-module.exports = Validate;
+module.exports = SchemaValidator;

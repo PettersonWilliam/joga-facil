@@ -73,4 +73,4 @@ class PositionController extends BaseController {
   }
 }
 
-export default new PositionController();
+export default PositionController;
