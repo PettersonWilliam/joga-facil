@@ -2,8 +2,9 @@ import Matchs from '../models/Matchs';
 import Participants from '../models/Participants';
 
 class MatchsService {
-  create(data) {
+    store(data) {
     return Matchs.create(data);
+    console.log(data);
   }
 
   index() {
@@ -54,6 +55,17 @@ class MatchsService {
   }
 
   async delete(id) {
+    const match = await Matchs.findOne({
+      where: {
+        status: 'OPEN',
+        id
+      }
+    });
+  
+    if (!match) { 
+      throw new Error('Nao é possivel deletar a partida');
+    }
+
     await Matchs.destroy({
         where: {
           id,

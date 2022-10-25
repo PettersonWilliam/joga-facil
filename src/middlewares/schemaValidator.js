@@ -18,4 +18,4 @@ const SchemaValidator = (schema) => (req, res, next) => {
   }
 };
 
-module.exports = SchemaValidator;
+export default SchemaValidator;

@@ -27,9 +27,11 @@ class PositionController extends BaseController {
     try {
       const position = await PositionsService.index();
 
-      return res.json(position);
+      return this.handleResponse({ position } , res);
     } catch (e) {
-      return res.status(400).json("Erro ao listar posição.");
+      return this.handleError({
+        message:'Erro ao listar posição.'
+      },req, res);
     }
   }
 
@@ -37,9 +39,11 @@ class PositionController extends BaseController {
     try {
       const position = await PositionsService.show(req.filter.id);
 
-      return res.json(position);
+      return this.handleResponse({ position } , res);
     } catch (e) {
-      return res.status(401).json("erro ao listar posição desejada ");
+      return this.handleError({
+        message:'Erro ao listar posição.'
+      },req, res);
     }
   }
 
@@ -50,9 +54,11 @@ class PositionController extends BaseController {
 
       const position = await PositionsService.update(filter, changes);
 
-      return res.json(position);
+      return this.handleResponse({ position } , res);
     } catch (e) {
-      return res.status(400).json("Erro ao atualizar Posição.");
+      return this.handleError({
+        message:'Erro ao atualizar posição.'
+      },req, res);
     }
   }
 
@@ -66,11 +72,12 @@ class PositionController extends BaseController {
 
       await PositionsService.delete(id);
 
-      return res.json(true);
+      return this.handleResponse( true , res);
     } catch (e) {
-      return res.status(400).json("Erro ao deletar posição.");
+      return this.handleError({
+        message:'Erro ao deletar posição.'
+      },req, res);
     }
   }
 }
-
 export default PositionController;

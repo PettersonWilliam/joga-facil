@@ -13,7 +13,7 @@ class BaseController {
 
 	handleResponse(data, res) {
 		return res.status(200).json({
-			status: 'success',
+			status: 'sucess',
 			data: data
 		});
 	}

@@ -34,9 +34,11 @@ class UserController extends BaseController {
     try {
       const user = await UserService.index();
 
-      return res.json(user);
+      return this.handleResponse({ user }, res);
     } catch (e) {
-      return res.status(400).json("Erro ao listar usuário.");
+      return this.handleError({
+        message: 'Erro ao listar usuário.'
+      }, req, res);
     }
   }
 
@@ -44,9 +46,11 @@ class UserController extends BaseController {
     try {
       const user = await UserService.show(req.filter.id);
 
-      return res.json(user);
+      return this.handleResponse({ user }, res);
     } catch (e) {
-      return res.status(401).json(e.message);
+      return this.handleError({
+        message: 'Erro ao listar usuário.'
+      }, req, res);
     }
   }
 
@@ -57,9 +61,11 @@ class UserController extends BaseController {
 
       const user = await UserService.update(filter, changes);
 
-      return res.json(user);
+      return this.handleResponse({ user }, res);
     } catch (e) {
-      return res.status(400).json("Erro ao atualizar usuário.");
+      return this.handleError({
+        message: 'Erro ao atualizar usuário.'
+      }, req, res);
     }
   }
 
@@ -69,9 +75,11 @@ class UserController extends BaseController {
 
       const userId = await UserService.delete(id);
 
-      return res.json(userId);
+      return this.handleResponse({ user }, res);
     } catch (e) {
-      return res.status(400).json("Erro ao deletar usuário.");
+      return this.handleError({
+        message: 'Erro ao deletar usuário.'
+      }, req, res);
     }
   }
 
@@ -81,9 +89,11 @@ class UserController extends BaseController {
 
       const token = await UserService.login(data);
 
-      return res.json(token);
+      return this.handleResponse({ token }, res);
     } catch (e) {
-      return res.status(401).json("Dados inválidos");
+      return this.handleError({
+        message: 'Dados Inválidos.'
+      }, req, res);
     }
   }
   

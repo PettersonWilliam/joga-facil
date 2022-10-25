@@ -1,22 +1,28 @@
-import { Router } from 'express';
-import matchController from '../controllers/matchController';
-import MatchsSchema from '../schemas/matchs';
-import schemaValidator from '../middlewares/schemaValidator';
-import loginRequired from '../middlewares/loginRequired';
+import BaseRoutes from './base';
+import MatchSchema from '../schemas/matchs';
+import MatchController from '../controllers/matchController';
 
-const router = new Router();
-const matchsSchema = MatchsSchema();
+ export default class MatchRoutes extends BaseRoutes {
+    constructor() {
+        super();
 
-router.post('/', loginRequired, schemaValidator(matchsSchema.store), matchController.store);
+            this.matchSchema = MatchSchema();
+            this.matchController = new MatchController();
+    }
 
-router.get('/', loginRequired, matchController.index);
+    setup() {
+    this.router.post('/', this.loginRequired, this.SchemaValidator(this.matchSchema.store),this.matchController.store);
 
-router.get('/:id', loginRequired, schemaValidator(matchsSchema.show), matchController.show);
+    this.router.get('/', this.loginRequired, this.matchController.index);
 
-router.put('/:id', loginRequired, schemaValidator(matchsSchema.update), matchController.update);
+    this.router.get('/:id', this.loginRequired, this.SchemaValidator(this.matchSchema.show), this.matchController.show);
 
+    this.router.put('/:id', this.loginRequired, this.SchemaValidator(this.matchSchema.update), this.matchController.update);
 
-router.delete('/:id', loginRequired, schemaValidator(matchsSchema.delete), matchController.delete);
+    this.router.delete('/:id', this.SchemaValidator(this.matchSchema.delete), this.matchController.delete);
 
+    return this.router;
 
-export default router;
+    }
+ 
+}

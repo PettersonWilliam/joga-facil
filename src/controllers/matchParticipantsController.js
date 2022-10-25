@@ -9,15 +9,18 @@ class MatchParticipantsController extends BaseController {
 
     this.bindActions(['store','index','show','update','delete']);
   }
+
   async store(req, res) {
     try {
       const matchParticipants = pick(req.data, ['match_id','participant_id','is_confirmed','gols','rate']);
 
         await MatchsParticipantsService.create(matchParticipants);
 
-      return res.json(matchParticipants);
+        return this.handleResponse({ matchParticipants } , res);
     } catch (e) {
-      return res.status(400).json("Erro ao criar RELACIONAMENTO.");
+      return this.handleError({
+        message:'Erro ao criar relacionamento das partida com participantes.'
+      },req, res);
     }
   }
 
@@ -25,9 +28,11 @@ class MatchParticipantsController extends BaseController {
     try {
       const matchsParticipants = await MatchsParticipantsService.index();
 
-      return res.json(matchsParticipants);
+      return this.handleResponse({ matchsParticipants } , res);
     } catch (e) {
-      return res.status(400).json("Erro ao listar TodosRELACIONAMENTOS.");
+      return this.handleError({
+        message:'Erro ao listar RELACIONAMENTO DAS partidaS COM PARTICIPANTES.'
+      },req, res);
     }
   }
 
@@ -37,9 +42,11 @@ class MatchParticipantsController extends BaseController {
         req.filter.id
       );
 
-      return res.json(matchParticipant);
+      return this.handleResponse({ matchParticipant } , res);
     } catch (e) {
-      return res.status(400).json({ errors: "ID DO RELACINAMENTO NÃO EXISTE" });
+      return this.handleError({
+        message:'RELACIONAMENTO NÃO EXISTE.'
+      },req, res);
     }
   }
 
@@ -69,9 +76,12 @@ class MatchParticipantsController extends BaseController {
 
       const userId = await MatchsParticipantsService.delete(id);
 
-      return res.json(userId);
+      return this.handleResponse( { userId } , res);
     } catch (e) {
-      return res.status(400).json("Error, Matchs Participants nao existe.");
+      console.log(e,'passei aki');
+      return this.handleError({
+        message:'Erro ao deletar relacionamento.'
+      },req, res);
     }
   }
 }

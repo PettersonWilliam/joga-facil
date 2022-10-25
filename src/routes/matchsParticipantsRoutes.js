@@ -1,20 +1,22 @@
-import BaseController from './base';
-import MatchsParticipantsService from '../services/matchsParticipantsService';
-import { pick } = from 'lodash';
+import BaseRoutes from './base';
+import MatchsParticipantsSchema from '../schemas/matchsParticipants'
+import MatchsParticipantsController from '../controllers/matchParticipantsController'
 
-export default class MatchsParticipantsRoutes extends BaseController {
+export default class MatchsParticipantsRoutes extends BaseRoutes {
     constructor() {
         super();
 
         this.matchsParticipantsSchema = MatchsParticipantsSchema();
         this.matchsParticipantsController = new MatchsParticipantsController();
     }
+
+    setup() {
+        this.router.get('/', this.loginRequired, this.matchsParticipantsController.index);
+        this.router.post('/',  this.loginRequired, this.SchemaValidator(this.matchsParticipantsSchema.store), this.matchsParticipantsController.store);
+        this.router.get('/:id', this.loginRequired, this.SchemaValidator(this.matchsParticipantsSchema.show), this.matchsParticipantsController.show);
+        this.router.put('/:id', this.loginRequired, this.SchemaValidator(this.matchsParticipantsSchema.update), this.matchsParticipantsController.update);
+        this.router.delete('/:id', this.loginRequired, this.SchemaValidator(this.matchsParticipantsSchema.delete), this.matchsParticipantsController.delete);
+
+        return this.router;
+    }
 }
-this.router.post('/', this.loginRequired, this.schemaValidator(this.matchsParticipantsSchema.store), this.matchParticipantsController.store);
-this.router.get('/', this.loginRequired, this.matchParticipantsController.index);
-this.router.get('/:id', this.loginRequired, this.schemaValidator(this.matchsParticipantsSchema.show), this.matchParticipantsController.show);
-this.router.put('/:id', this.loginRequired, this.schemaValidator(this.matchsParticipantsSchema.update), this.matchParticipantsController.update);
-this.router.delete('/:id', this.loginRequired, this.schemaValidator(this.matchsParticipantsSchema.delete), this.matchParticipantsController.delete);
-
-
-return this.router;

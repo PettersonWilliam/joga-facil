@@ -36,7 +36,7 @@ class MatchsParticipantsService {
   async delete(id) {
     await MatchsParticipants.destroy({
         where: {
-          ...filter
+          id
         },
         attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate']
     });
