@@ -2,6 +2,7 @@ import Position from "../models/Position";
 
 class PositionService {
   async create(position) {
+  
     const createdPosition = await Position.create(position);
 
     return createdPosition;

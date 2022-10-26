@@ -2,15 +2,13 @@ import Matchs from '../models/Matchs';
 import Participants from '../models/Participants';
 
 class MatchsService {
-    store(data) {
+    async store(data) {
     return Matchs.create(data);
-    console.log(data);
   }
 
   index() {
     return Matchs.findAll({
       attributes: ['id','date', 'status','started_at','end_at','team_amount'],
-      logging: true,
       include: {
         as: 'participants',
         model: Participants

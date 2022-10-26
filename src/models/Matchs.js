@@ -34,9 +34,9 @@ export default class Matchs extends Model {
   static associate(models) {
     this.belongsToMany(models.Participants, {
       through: models.MatchsParticipants,
-      foreignKey: "participant_id",
+      foreignKey: "match_id",
       as: "participants",
-      otherKey: "match_id",
+      otherKey: "participant_id",
     });
   }
 }

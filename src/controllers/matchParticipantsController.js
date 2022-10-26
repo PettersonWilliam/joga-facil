@@ -2,7 +2,6 @@ import BaseController from './base';
 import MatchsParticipantsService from "../services/MatchsParticipantsService";
 import { pick } from 'lodash';
 
-
 class MatchParticipantsController extends BaseController {
   constructor() {
     super();
@@ -18,8 +17,9 @@ class MatchParticipantsController extends BaseController {
 
         return this.handleResponse({ matchParticipants } , res);
     } catch (e) {
+      console.log(e);
       return this.handleError({
-        message:'Erro ao criar relacionamento das partida com participantes.'
+        message: e
       },req, res);
     }
   }
