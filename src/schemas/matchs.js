@@ -9,16 +9,16 @@ module.exports = () => {
           status: yup.string().required(),
           started_at: yup.date().required(),
           end_at: yup.string().required(),
-          team_amount: yup.number().required(),
+          team_amount: yup.number().required()
         })
-        .noUnknown(),
+        .noUnknown()
     },
     show: {
       params: yup
         .object({
-          id: yup.number().required(),
+          id: yup.number().required()
         })
-        .noUnknown(),
+        .noUnknown()
     },
     update: {
       body: yup
@@ -27,22 +27,34 @@ module.exports = () => {
           status: yup.string().nullable(),
           started_at: yup.date().nullable(),
           end_at: yup.string().nullable(),
-          team_amount: yup.number().nullable(),
+          team_amount: yup.number().nullable()
         })
         .noUnknown(),
       params: yup
         .object({
-          id: yup.number().required(),
+          id: yup.number().required()
+        })
+        .noUnknown()
+    },
+    updateStatus: {
+      body: yup
+        .object({
+          status: yup.string().required()
         })
         .noUnknown(),
+      params: yup
+        .object({
+          id: yup.number().required()
+        })
+        .noUnknown()
     },
     delete: {
       params: yup
         .object({
-          id: yup.number().required(),
+          id: yup.number().required()
         })
-        .noUnknown(),
-    },
+        .noUnknown()
+    }
   };
 
   return schema;
