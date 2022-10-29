@@ -24,7 +24,6 @@ module.exports = () => {
       body: yup
         .object({
           date: yup.date().nullable(),
-          status: yup.string().nullable(),
           started_at: yup.date().nullable(),
           end_at: yup.string().nullable(),
           team_amount: yup.number().nullable()

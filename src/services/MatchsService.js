@@ -75,26 +75,26 @@ class MatchsService {
   }
 
   async delete(id) {
-    const status = await Matchs.findOne({
+    const match = await Matchs.findOne({
       where: {
         status: "OPEN",
         id
       }
     });
 
-    if (!status) {
-      throw ("Nao é possivel deletar o status");
+    if (!match) {
+      throw ("Nao é possivel deletar a partida");
     }
 
     await Matchs.destroy({
       where: {
         id,
         deleted_at: null
-      },
+      },  
       paranoid: false
     });
 
-    return true;
+    return true;  
   }
 }
 export default new MatchsService();

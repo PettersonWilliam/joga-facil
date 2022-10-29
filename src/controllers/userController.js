@@ -75,7 +75,7 @@ class UserController extends BaseController {
 
       const userId = await UserService.delete(id);
 
-      return this.handleResponse({ user }, res);
+      return this.handleResponse({ userId }, res);
     } catch (e) {
       return this.handleError({
         message: 'Erro ao deletar usuário.'
