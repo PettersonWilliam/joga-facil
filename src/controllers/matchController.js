@@ -87,6 +87,7 @@ class MatchController extends BaseController {
       return this.handleResponse({ userId }, res);
     } catch (e) {
       return this.handleError({
+        message: "Erro! so podemos deletar a partida que esta Aberta."
       },req,res);
     }
   }

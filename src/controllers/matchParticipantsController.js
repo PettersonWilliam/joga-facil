@@ -60,9 +60,11 @@ class MatchParticipantsController extends BaseController {
       await MatchsParticipantsService.update(options);
 
 
-      return res.json(true);
+      return this.handleResponse({ options } , res);
     } catch (e) {
-      return res.status(400).json("Erro ao atualizar matchsParticipants.");
+      return this.handleError({
+        message:'Erro ao atualizar os participantes da partida.'
+      },req, res);
     }
   }
 
@@ -70,17 +72,12 @@ class MatchParticipantsController extends BaseController {
     try {
       const { id } = req.filter;
 
-      if (!id) {
-        return res.json("nao exite nenhuma partida vinculada ao participante");
-      }
-
       const userId = await MatchsParticipantsService.delete(id);
 
       return this.handleResponse( { userId } , res);
     } catch (e) {
-      console.log(e,'passei aki');
       return this.handleError({
-        message:'Erro ao deletar relacionamento.'
+        message:'Erro ao deletar relacionamento de um participante a uma partida.'
       },req, res);
     }
   }

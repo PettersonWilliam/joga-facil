@@ -83,7 +83,7 @@ class MatchsService {
     });
 
     if (!match) {
-      throw ("Nao é possivel deletar a partida");
+      throw new Error("Nao é possivel deletar a partida");
     }
 
     await Matchs.destroy({

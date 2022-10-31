@@ -94,6 +94,7 @@ class MatchsParticipantsService {
         throw new Error('ID DO RELACIONAMENTO não existE.');
     }
         return matchParticipant;
+
 }
   async update({ filter, changes })  {
     return MatchsParticipants.update(changes, {
@@ -105,11 +106,19 @@ class MatchsParticipantsService {
   }
 
   async delete(id) {
+    const matchParticipant = await MatchsParticipants.findOne({
+      where: {
+        id
+      }
+    })
+2    if (!matchParticipant) {
+      throw new Error('NÃO EXITE PARTICIPANTE RELACIONADO A UMA PARTIDA.');      
+    }
     await MatchsParticipants.destroy({
         where: {
           id
         },
-        attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate']
+        attributes: ['id','match_id', 'participant_id','is_confirmed','gols','rate']
     });
 
     return true;
