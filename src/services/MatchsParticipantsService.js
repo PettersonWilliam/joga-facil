@@ -111,7 +111,7 @@ class MatchsParticipantsService {
         id
       }
     })
-2    if (!matchParticipant) {
+   if (!matchParticipant) {
       throw new Error('NÃO EXITE PARTICIPANTE RELACIONADO A UMA PARTIDA.');      
     }
     await MatchsParticipants.destroy({
