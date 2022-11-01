@@ -45,7 +45,7 @@ class MatchParticipantsController extends BaseController {
       return this.handleResponse({ matchParticipant } , res);
     } catch (e) {
       return this.handleError({
-        message:'RELACIONAMENTO NÃO EXISTE.'
+        message:'RELACIONAMENTO DA PARTIDA AO PARTICIPANTE NÃO EXISTE.'
       },req, res);
     }
   }

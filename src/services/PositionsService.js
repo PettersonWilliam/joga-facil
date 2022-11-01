@@ -1,49 +1,100 @@
-import Position from "../models/Position";
+import Positions from "../models/positios";
+import Participants from "../models/Participants";
 
-class PositionService {
-  async create(position) {
-  
-    const createdPosition = await Position.create(position);
-
-    return createdPosition;
+class PositionsService {
+  async store(data) {
+    return Positions.create(data);
   }
 
   index() {
-    return Position.findAll({ attributes: ["id", "name"] })
+    return Matchs.findAll({
+      attributes: ["id","date","status","started_at","end_at","team_amount"],
+      include: {
+        as: "participants",
+        model: Participants
+      },
+      where: {
+        deleted_at: null
+      },
+      paranoid: false
+    });
   }
 
   async show(id) {
-    const position = await Position.findOne({
+    const match = await Matchs.findOne({
       where: {
         id,
-        deleted_at: null,
+        deleted_at: null
       },
       paranoid: false,
-      attributes: ["id", "name"],
+      attributes: ["id","date","status","started_at","end_at","team_amount"],
+      include: {
+        model: Participants,
+        required: false,
+        as: "participants"
+      }
     });
 
-    if (!position) {
-      throw new Error("posição não existe");
+    if (!match) {
+      throw new Error("partida não existente.");
     }
-    return position;
+
+    return match;
   }
 
-  async update(filter, changes) {
-    return Position.update(changes, {
+  async update({ filter, changes }) {
+    const match = await Matchs.findOne({
+      where: {
+        status: "OPEN",
+        deleted_at: null
+      },
+      paranoide: false
+    });
+
+    if (!match) {
+      throw new Error("Erro ao atualizar partida");
+    }
+
+    return Matchs.update(changes, {
       where: {
         id: filter.id,
+        deleted_at: null
       },
+      paranoid: false
+    });
+  }
+
+  async updateStatus({ filter, changes }) {
+    return Matchs.update(changes, {
+      where: {
+        id: filter.id,
+        deleted_at: null
+      },
+      paranoid: false
     });
   }
 
   async delete(id) {
-    await Position.destroy({
+    const match = await Matchs.findOne({
+      where: {
+        status: "OPEN",
+        id
+      }
+    });
+
+    if (!match) {
+      throw new Error("Nao é possivel deletar a partida");
+    }
+
+    await Matchs.destroy({
       where: {
         id,
-        deleted_at: null,
-      },
-      paranoid: false,
+        deleted_at: null
+      },  
+      paranoid: false
     });
+
+    return true;  
   }
 }
-export default new PositionService();
+export default new MatchsService();

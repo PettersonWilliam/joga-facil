@@ -18,16 +18,17 @@ class MatchsParticipantsService {
           as: 'participants',
           include: {
             model: Position,
+            where: {
+              id: goalKeeperPosition.id
+            },
             attributes: ['id']
           }
         }
     });
   
-    const parsedMatch = matchsWithGoalKeepers.toJSON();
+    const parsedMatch = matchsWithGoalKeepers.toJSON();//matchsWithGoalKeepers -- partidas com goleiros
   
-    const goalKeeperAmount = parsedMatch.participants.filter(participant => participant.Position.id === goalKeeperPosition.id).length;
-  
-    return goalKeeperAmount < 2;
+    return parsedMatch.participants.length < 2;
   }
 
     async create(data) {
@@ -39,7 +40,7 @@ class MatchsParticipantsService {
       });
 
       if (matchsParticipants) {
-        throw ('O participante nao pode esta na mesma partida por mais de uma vez')
+        throw new Error('O participante nao pode esta na mesma partida por mais de uma vez')
       }
 
       const goalKeeperPosition = await Position.findOne({
@@ -64,11 +65,11 @@ class MatchsParticipantsService {
         }
       });
 
-      if (goalKeeperToInsert) {
-        const allowCreateGoalKeeper = await this.checkGoalKeeperAmount(data, goalKeeperPosition);
+      if (goalKeeperToInsert) { //goalKeeperToInsert -- inserir goleiro
+        const allowCreateGoalKeeper = await this.checkGoalKeeperAmount(data, goalKeeperPosition);//allowCreateGoalKeeper -- permitir criar goleiro
 
-        if (!allowCreateGoalKeeper) {
-          throw ('So é permitido 2 goleiros por partida ')
+        if (!allowCreateGoalKeeper) {//allowCreateGoalKeeper -- permitir criar goleiro
+          throw ('So é permitido 2 goleiros por partida.')
         }
       }
     
