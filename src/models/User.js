@@ -14,6 +14,9 @@ export default class User extends Model {
         password: {
           type: Sequelize.STRING,
         },
+        is_blocked: {
+          type: Sequelize.BOOLEAN,
+        },
       },
       {
         sequelize,

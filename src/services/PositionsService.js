@@ -1,100 +1,47 @@
-import Positions from "../models/positios";
-import Participants from "../models/Participants";
+import Position from '../models/Position';
 
-class PositionsService {
-  async store(data) {
-    return Positions.create(data);
-  }
-
-  index() {
-    return Matchs.findAll({
-      attributes: ["id","date","status","started_at","end_at","team_amount"],
-      include: {
-        as: "participants",
-        model: Participants
-      },
-      where: {
-        deleted_at: null
-      },
-      paranoid: false
-    });
-  }
-
-  async show(id) {
-    const match = await Matchs.findOne({
-      where: {
-        id,
-        deleted_at: null
-      },
-      paranoid: false,
-      attributes: ["id","date","status","started_at","end_at","team_amount"],
-      include: {
-        model: Participants,
-        required: false,
-        as: "participants"
-      }
-    });
-
-    if (!match) {
-      throw new Error("partida não existente.");
+class PositionService {
+    async create(position) {
+        return Position.create(position)
     }
 
-    return match;
-  }
-
-  async update({ filter, changes }) {
-    const match = await Matchs.findOne({
-      where: {
-        status: "OPEN",
-        deleted_at: null
-      },
-      paranoide: false
-    });
-
-    if (!match) {
-      throw new Error("Erro ao atualizar partida");
+    index() {
+        return Position.findAll({ attributes: ['id', 'name'] });
     }
 
-    return Matchs.update(changes, {
-      where: {
-        id: filter.id,
-        deleted_at: null
-      },
-      paranoid: false
-    });
-  }
+    async show(id) {
+        const position = await Position.findOne({
+            where: {
+                id,
+                deleted_at: null
+            },
+            paranoid: false,
+            attributes: [ 'id', 'name']
+        });
 
-  async updateStatus({ filter, changes }) {
-    return Matchs.update(changes, {
-      where: {
-        id: filter.id,
-        deleted_at: null
-      },
-      paranoid: false
-    });
-  }
-
-  async delete(id) {
-    const match = await Matchs.findOne({
-      where: {
-        status: "OPEN",
-        id
-      }
-    });
-
-    if (!match) {
-      throw new Error("Nao é possivel deletar a partida");
+        if (!position) {
+            throw new Error('posição não existe');
+        }
+            return position;
     }
 
-    await Matchs.destroy({
-      where: {
-        id,
-        deleted_at: null
-      },  
-      paranoid: false
-    });
-
-    return true;  
-  }
+    async update(filter, changes)  {
+        return Position.update(changes, {
+            where: {
+                id: filter.id
+            }
+        });
+    }
+        
+    async delete(id) {
+        await Position.destroy({
+            where: {
+                id,
+                deleted_at: null
+            },
+            paranoid: false
+        });
+    }
+    
 }
-export default new MatchsService();
+export default new PositionService();

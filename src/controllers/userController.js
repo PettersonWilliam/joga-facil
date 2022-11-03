@@ -85,14 +85,15 @@ class UserController extends BaseController {
 
   async login(req, res) {
     try {
-      const data = pick(req.data, ['password','email'])
+      const data = pick(req.data, ['email', 'password'])
 
       const token = await UserService.login(data);
 
       return this.handleResponse({ token }, res);
     } catch (e) {
+      console.log(e);
       return this.handleError({
-        message: 'Dados Inválidos.'
+        message: 'Erro no login'
       }, req, res);
     }
   }
@@ -100,3 +101,4 @@ class UserController extends BaseController {
 }
 
 export default UserController;
+

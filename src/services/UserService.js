@@ -1,5 +1,7 @@
 import User from '../models/User';
-import bcrypt from 'bcrypt';
+import AmountUserAccess from '../models/AmountUserAccess';
+import UserAccessService from '../services/UserAccessService';
+import { compareSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 class UserService {
@@ -61,21 +63,53 @@ class UserService {
             return user;
     }
 
-    async login(filter) {
+    async login(data) {
         const user = await User.findOne({
             where: {
-                email: filter.email
+                email: data.email,
+                is_blocked: false
             },
+            raw: true,
             attributes: ['id', 'name', 'email', 'password']
         });
 
         if (!user) {
-            throw new Error();
+            throw new Error('usuario não existe');
         }
 
-        if (!bcrypt.compareSync(filter.password, user.password)) {
-            throw new Error();
+        const isValidPassword = compareSync(data.password, user.password);
+
+        if (!isValidPassword) {
+            const allowBlockUser = await UserAccessService.checkAccessVerification({
+                user_id: user.id,
+            });        
+
+            if (!allowBlockUser) {
+                await AmountUserAccess.create({
+                    user_id:user.id,
+                    status: 'FAIL'
+                })
+                throw new Error('SENHA INCORRETA');
+            }
+
+            console.log(user.id);
+
+            await User.update({
+                is_blocked: true
+            }, {
+                where: {
+                    id: user.id
+                }
+            });
+
+            throw new Error('Usuário bloqueado');
+
         }
+
+        await AmountUserAccess.create({
+            user_id: user.id,
+            status: 'SUCCESS'
+        })
 
         return jwt.sign({
             id: user.id,
@@ -84,6 +118,8 @@ class UserService {
         }, process.env.TOKEN_SECRET, {
             expiresIn: process.env.TOKEN_EXPIRATION
         });
+
+        return login;
     },
 };
 

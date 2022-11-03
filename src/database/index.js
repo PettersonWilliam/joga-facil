@@ -5,9 +5,10 @@ import Participants from '../models/Participants';
 import Position from '../models/Position';
 import Matchs from '../models/Matchs';
 import MatchsParticipants from '../models/MatchsParticipants';
+import AmountUserAccess from '../models/AmountUserAccess';
 import databaseConfig from '../config/database';
 
-const models = [User, Position, Participants, Matchs, MatchsParticipants];
+const models = [User, Position, Participants, Matchs, MatchsParticipants, AmountUserAccess];
 
 const sequelize = new Sequelize(databaseConfig);
 const instances = {};

@@ -6,21 +6,13 @@ export default class Position extends Model {
       {
         name: {
           type: Sequelize.STRING,
-        },
-        id: {
-          type: Sequelize.INTEGER,
-          primaryKey: true,
-          autoIncrement: true,
-        },
+        }
       },
       {
         sequelize,
         paranoid: true,
         timestamps: true,
-        sequelize: sequelize,
-        createdAt: "created_at",
-        updatedAt: "updated_at",
-        deletedAt: "deleted_at",
+        sequelize: sequelize
       }
     );
 
