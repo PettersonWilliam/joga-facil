@@ -1,6 +1,5 @@
 import User from '../models/User';
 import AmountUserAccess from '../models/AmountUserAccess';
-import AmountUserAccessService from '../services/AmountUserAccessService';
 import { compareSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -80,7 +79,7 @@ class UserService {
         const isValidPassword = compareSync(data.password, user.password);
 
         if (!isValidPassword) {
-            const allowBlockUser = await AmountUserAccessService.checkAccessVerification({
+            const allowBlockUser = await UserAccessService.checkAccessVerification({
                 user_id: user.id,
             });        
 
@@ -91,6 +90,7 @@ class UserService {
                 })
                 throw new Error('SENHA INCORRETA');
             }
+
 
             await User.update({
                 is_blocked: true
@@ -113,7 +113,7 @@ class UserService {
             id: user.id,
             name: user.name,
             email: user.email
-        }, process.env.TOKEN_SECRET, {
+        },  process.env.TOKEN_SECRET, {
             expiresIn: process.env.TOKEN_EXPIRATION
         });
 

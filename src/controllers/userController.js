@@ -96,7 +96,6 @@ class UserController extends BaseController {
       }, req, res);
     }
   }
-  
 }
 
 export default UserController;
