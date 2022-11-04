@@ -1,14 +1,14 @@
 import Sequelize from 'sequelize';
 
 import User from '../models/User';
-import Participants from '../models/Participants';
-import Position from '../models/Position';
 import Matchs from '../models/Matchs';
-import MatchsParticipants from '../models/MatchsParticipants';
-import AmountUserAccess from '../models/AmountUserAccess';
+import Position from '../models/Position';
 import databaseConfig from '../config/database';
+import Participants from '../models/Participants';
+import UserAccessLogs from '../models/UserAccessLogs';
+import MatchsParticipants from '../models/MatchsParticipants';
 
-const models = [User, Position, Participants, Matchs, MatchsParticipants, AmountUserAccess];
+const models = [User, Position, Participants, Matchs, MatchsParticipants, UserAccessLogs];
 
 const sequelize = new Sequelize(databaseConfig);
 const instances = {};

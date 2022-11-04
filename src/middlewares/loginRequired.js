@@ -13,14 +13,21 @@ export default async (req, res, next) => {
   const [, token] = authorization.split(" ");
 
   try {
-    const dados = jwt.verify(token, process.env.TOKEN_SECRET);
-    const { id, email } = dados;
+    const { id, email } = jwt.verify(token, process.env.TOKEN_SECRET);
+
+    if(!id || !email) {
+      return res.status(401).json({
+        errors: ["INVALID TOKEN"],
+      });
+    }
 
     const user = await User.findOne({
       where: {
         id,
         email,
+        deleted_at: null
       },
+      paranoid: false
     });
 
     if (!user) {

@@ -1,6 +1,6 @@
 import User from '../models/User';
-import AmountUserAccessService from '../services/AmountUserAccessService';
-import AmountUserAccess from '../models/AmountUserAccess';
+import UserAccessService from '../services/UserAccessService';
+import UserAccessLogs from '../models/UserAccessLogs';
 import { compareSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -66,8 +66,7 @@ class UserService {
     async login(data) {
         const user = await User.findOne({
             where: {
-                email: data.email,
-                is_blocked: false
+                email: data.email
             },
             raw: true,
             attributes: ['id', 'name', 'email', 'password']
@@ -78,38 +77,34 @@ class UserService {
         }
 
         const isValidPassword = compareSync(data.password, user.password);
-        console.log(isValidPassword);
-
+        
         if (!isValidPassword) {
-            const allowBlockUser = await AmountUserAccessService.checkAccessVerification({
-                user_id: user.id
-            });
+            const allowBlockUser = await UserAccessService.checkAccessVerification(user.id);
 
-            if (!allowBlockUser) {
-                await AmountUserAccess.create({
-                    user_id:user.id,
-                    status: 'FAIL'
-                })
-                throw new Error('SENHA INCORRETA');
+            if (allowBlockUser) {
+                await User.update({
+                    is_blocked: true
+                }, {
+                    where: {
+                        id: user.id
+                    }
+                });
+
+                throw new Error('Usuário bloqueado');
             }
 
-
-            await User.update({
-                is_blocked: true
-            }, {
-                where: {
-                    id: user.id
-                }
+            await UserAccessLogs.create({
+                user_id: user.id,
+                status: 'FAIL'
             });
 
-            throw new Error('Usuário bloqueado');
-
+            throw new Error('SENHA INVÁLIDA');
         }
 
-        await AmountUserAccess.create({
+        await UserAccessLogs.create({
             user_id: user.id,
             status: 'SUCCESS'
-        })
+        });
 
         return jwt.sign({
             id: user.id,

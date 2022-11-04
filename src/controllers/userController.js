@@ -6,14 +6,7 @@ class UserController extends BaseController {
   constructor() {
     super();
 
-    this.bindActions(['store','index','show','update','delete','login']);
-
-    // this.store = this.store.bind(this);
-    // this.index = this.index.bind(this);
-    // this.show = this.show.bind(this);
-    // this.update = this.update.bind(this);
-    // this.delete = this.delete.bind(this);
-    // this.login = this.login.bind(this);
+    this.bindActions(['store', 'index', 'show', 'update', 'delete', 'login']);
   }
 
   async store(req, res) {

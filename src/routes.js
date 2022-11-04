@@ -11,9 +11,9 @@ import MatchsParticipantRoutes from './routes/matchsParticipantsRoutes';
 		this.routes = new Router();
 
         this.userRoutes = new UserRoutes();
+        this.matchRoutes = new MatchRoutes();
         this.positionRoutes = new PositionRoutes();
         this.participantRoutes = new ParticipantRoutes();
-        this.matchRoutes = new MatchRoutes();
         this.matchsParticipantRoutes = new MatchsParticipantRoutes();
 	}
 
