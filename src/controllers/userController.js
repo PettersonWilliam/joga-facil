@@ -91,7 +91,6 @@ class UserController extends BaseController {
 
       return this.handleResponse({ token }, res);
     } catch (e) {
-      console.log(e);
       return this.handleError({
         message: 'Erro no login'
       }, req, res);

@@ -1,5 +1,5 @@
 import BaseController from "./base";
-import UserAccessService from "../services/UserAccessService";
+import AmountUserAccessService from "../services/AmountUserAccessService";
 
 class CheckAccessController extends BaseController {
   constructor() {
@@ -14,16 +14,13 @@ class CheckAccessController extends BaseController {
         user_id: req.userId
       };
 
-      const accessLog = await UserAccessService.checkAccess(filter);
+      const accessLog = await AmountUserAccessService.checkAccess(filter);
 
       return this.handleResponse({ accessLog }, res);
     } catch (e) {
-      return this.handleError(
-        {
+      return this.handleError({
           message: "ERRO AO LOGAR USUARIO"
-        },
-        req,
-        res
+        },req,res
       );
     }
   }

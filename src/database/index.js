@@ -13,9 +13,7 @@ const models = [User, Position, Participants, Matchs, MatchsParticipants, Amount
 const sequelize = new Sequelize(databaseConfig);
 const instances = {};
 
-models.forEach(model => {
-    instances[model.name] = model.init(sequelize);
-});
+models.forEach(model => instances[model.name] = model.init(sequelize));
 
 models.forEach((model) => {
     if (typeof model.associate === 'function') {

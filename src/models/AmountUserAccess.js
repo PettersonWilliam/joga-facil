@@ -1,5 +1,4 @@
 import Sequelize, { Model } from "sequelize";
-import bcrypt from "bcrypt";
 
 export default class AmountUserAccess extends Model {
   static init(sequelize) {
