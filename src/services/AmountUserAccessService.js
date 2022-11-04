@@ -1,13 +1,14 @@
 import AmountUserAccess from "../models/AmountUserAccess";
 
-class CheckAccesService {
+class AmountUserAccessService {
   async checkAccessVerification(filter) {
     const accessLogs = await AmountUserAccess.findAll({
         where: filter,
         raw:true,
         attributes: ['status'],
         order: [['id', 'DESC']],
-        limit: 3
+        limit: 3,
+        logging: true
      });
 
     return accessLogs.length === 3 && accessLogs.every(log => {
@@ -15,4 +16,4 @@ class CheckAccesService {
     })
  };
 }
-export default new CheckAccesService();
+export default new AmountUserAccessService();

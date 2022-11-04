@@ -1,4 +1,5 @@
 import User from '../models/User';
+import AmountUserAccessService from '../services/AmountUserAccessService';
 import AmountUserAccess from '../models/AmountUserAccess';
 import { compareSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -77,11 +78,12 @@ class UserService {
         }
 
         const isValidPassword = compareSync(data.password, user.password);
+        console.log(isValidPassword);
 
         if (!isValidPassword) {
-            const allowBlockUser = await UserAccessService.checkAccessVerification({
-                user_id: user.id,
-            });        
+            const allowBlockUser = await AmountUserAccessService.checkAccessVerification({
+                user_id: user.id
+            });
 
             if (!allowBlockUser) {
                 await AmountUserAccess.create({
