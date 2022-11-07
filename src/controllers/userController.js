@@ -16,7 +16,7 @@ class UserController extends BaseController {
       const { id, name, email } = await UserService.create(data);
 
       return this.handleResponse({ id, name, email }, res);
-    } catch (e) {
+    } catch (error) {
       return this.handleError({
         message: 'Erro ao criar usuário.'
       }, req, res);
@@ -28,7 +28,7 @@ class UserController extends BaseController {
       const user = await UserService.index();
 
       return this.handleResponse({ user }, res);
-    } catch (e) {
+    } catch (error) {
       return this.handleError({
         message: 'Erro ao listar usuário.'
       }, req, res);
@@ -40,7 +40,7 @@ class UserController extends BaseController {
       const user = await UserService.show(req.filter.id);
 
       return this.handleResponse({ user }, res);
-    } catch (e) {
+    } catch (error) {
       return this.handleError({
         message: 'Erro ao listar usuário.'
       }, req, res);
@@ -55,7 +55,7 @@ class UserController extends BaseController {
       const user = await UserService.update(filter, changes);
 
       return this.handleResponse({ user }, res);
-    } catch (e) {
+    } catch (error) {
       return this.handleError({
         message: 'Erro ao atualizar usuário.'
       }, req, res);
@@ -69,7 +69,7 @@ class UserController extends BaseController {
       const userId = await UserService.delete(id);
 
       return this.handleResponse({ userId }, res);
-    } catch (e) {
+    } catch (error) {
       return this.handleError({
         message: 'Erro ao deletar usuário.'
       }, req, res);
@@ -83,10 +83,8 @@ class UserController extends BaseController {
       const token = await UserService.login(data);
 
       return this.handleResponse({ token }, res);
-    } catch (e) {
-      return this.handleError({
-        message: 'Erro no login'
-      }, req, res);
+    } catch (error) {
+      return this.handleError(error, req, res);
     }
   }
 }

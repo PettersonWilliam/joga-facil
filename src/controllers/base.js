@@ -16,7 +16,6 @@ class BaseController {
 			message: error.message || 'Algo de errado ocorreu, por favor, tente novamente mais tarde.'
 		});
 	}
-
 }
 
 export default BaseController;

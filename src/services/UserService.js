@@ -98,7 +98,7 @@ class UserService {
                 status: 'FAIL'
             });
 
-            throw new Error('SENHA INVÁLIDA');
+            throw new Error('Senha inválida');
         }
 
         await UserAccessLogs.create({

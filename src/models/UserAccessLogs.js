@@ -5,7 +5,7 @@ export default class UserAccessLogs extends Model {
     return super.init(
       {
         status: {
-          type: Sequelize.STRING(7),
+          type: Sequelize.STRING,
         }
       },
         {
