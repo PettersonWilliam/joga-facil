@@ -9,10 +9,10 @@ import UserAccessLogs from "../models/UserAccessLogs";
             },
             attributes: ['status'],
             order: [['id', 'DESC']],
-            limit: 3
+            limit: 2
         });
 
-        return accessLogs.length === 3 && accessLogs.every(log => {
+        return accessLogs.length === 2 && accessLogs.every(log => {
           return log.status === 'FAIL'
         });
     };
