@@ -65,6 +65,26 @@ class MatchsService {
   }
 
   async updateStatus({ filter, changes }) {
+   const currentMatch = await Matchs.findOne({
+      where: {
+        id: filter.id,
+        status: ['OPEN', 'PROGRESS']
+      },
+      attributes: ['status']
+    });
+
+    if (!currentMatch) { // open, progress, finished -- PRECISA TER ESSA ORDEM
+      throw new Error('Não é possivel atualizar o status');
+    }
+
+    if (currentMatch.status === 'OPEN' && changes.status !== 'PROGRESS') {
+      throw new Error('Não é possivel atualizar o status');
+    }
+
+    if (currentMatch.status === 'PROGRESS' && changes.status !== 'FINISHED') {
+      throw new Error('Não é possivel atualizar o status');
+    }
+
     return Matchs.update(changes, {
       where: {
         id: filter.id,
@@ -72,6 +92,7 @@ class MatchsService {
       },
       paranoid: false
     });
+
   }
 
   async delete(id) {
@@ -90,11 +111,11 @@ class MatchsService {
       where: {
         id,
         deleted_at: null
-      },  
+      },
       paranoid: false
     });
 
-    return true;  
+    return true;
   }
 }
 export default new MatchsService();

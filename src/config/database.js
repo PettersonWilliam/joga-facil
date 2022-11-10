@@ -9,11 +9,11 @@ module.exports = {
   database: process.env.DATABASE,
   define: {
     timestamps: true,
-    underscored: true,// PERMITE QUE POSSA ESCREVER EM FORMATO SNAK_CASE
+    underscored: true,
     underscoredAll: true,
-    // createdAt: 'created_at',
-    // updatedAt: 'updated_at',
-    // deletedAt: 'deleted_at'
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    deletedAt: 'deleted_at'
   },
   dialectOptions: {
     timezone: 'America/Pernambuco',

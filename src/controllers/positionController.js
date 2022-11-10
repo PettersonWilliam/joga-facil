@@ -15,10 +15,10 @@ class PositionController extends BaseController {
 
       const { name } = await PositionsService.create(position)
 
-      return this.handleResponse(name , res);
+      return this.handleResponse({ name } , res);
     } catch (e) {
       return this.handleError({
-        message:'Erro ao criar posição.'
+        message: e.message
       },req, res);
     }
   }

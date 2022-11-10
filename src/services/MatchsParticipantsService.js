@@ -5,7 +5,7 @@ import MatchsParticipants from '../models/MatchsParticipants';
 
 class MatchsParticipantsService {
   async checkGoalKeeperAmount(data, goalKeeperPosition){
-    const matchsWithGoalKeepers = await Matchs.findOne({
+    const matchWithGoalKeepers = await Matchs.findOne({ //matchsWithGoalKeepers -- partidas com goleiros
         where: {
           id: data.match_id,
           deleted_at: null
@@ -25,10 +25,9 @@ class MatchsParticipantsService {
           }
         }
     });
-  
-    const parsedMatch = matchsWithGoalKeepers.toJSON();//matchsWithGoalKeepers -- partidas com goleiros
-  
-    return parsedMatch.participants.length < 2;
+    const matchAnalyzed = matchWithGoalKeepers.toJSON();//matchsWithGoalKeepers -- partidas com goleiros // matchAnalyzed -- Partida analizada
+
+    return matchAnalyzed.participants.length < 2;
   }
 
     async create(data) {
@@ -59,10 +58,7 @@ class MatchsParticipantsService {
           position_id: goalKeeperPosition.id,
           deleted_at: null
         },
-        paranoid: false,
-        include:  {
-          model: Position
-        }
+        paranoid: false
       });
 
       if (goalKeeperToInsert) { //goalKeeperToInsert -- inserir goleiro
@@ -72,24 +68,24 @@ class MatchsParticipantsService {
           throw ('So é permitido 2 goleiros por partida.')
         }
       }
-    
+
       return MatchsParticipants.create(data);
     }
 
     index() {
-      return MatchsParticipants.findAll({ 
-        attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate', ] 
+      return MatchsParticipants.findAll({
+        attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate', ]
       });
   }
     async show(id) {
     const matchParticipant = await MatchsParticipants.findOne({
         where: {
             id,
-            deleted_at: null
+			deleted_at: null
         },
-        paranoid: false,
+		paranoid: false,
         attributes:[ 'id','match_id', 'participant_id','is_confirmed','gols','rate']
-    }); 
+    });
 
     if (!matchParticipant) {
         throw new Error('ID DO RELACIONAMENTO não existE.');
@@ -102,8 +98,17 @@ class MatchsParticipantsService {
       where: {
         ...filter
       },
-      attributes: [ 'id','match_id', 'participant_id','is_confirmed','gols','rate'],
     });
+  }
+
+  updateIsConfirmed({ filter, changes }) {
+	return MatchsParticipants.update(changes, {
+		where: {
+			id: filter.id,
+			deleted_at: null
+		},
+		paranoid: false
+	});
   }
 
   async delete(id) {
@@ -113,7 +118,7 @@ class MatchsParticipantsService {
       }
     })
    if (!matchParticipant) {
-      throw new Error('NÃO EXITE PARTICIPANTE RELACIONADO A UMA PARTIDA.');      
+      throw new Error('NÃO EXITE PARTICIPANTE RELACIONADO A UMA PARTIDA.');
     }
     await MatchsParticipants.destroy({
         where: {

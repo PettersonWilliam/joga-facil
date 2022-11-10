@@ -7,42 +7,52 @@ module.exports = () => {
         .object({
           match_id: yup.number().required(),
           participant_id: yup.number().required(),
-          is_confirmed: yup.boolean().required(),
           gols: yup.number().required(),
-          rate: yup.number().required(),
+          rate: yup.number().required()
         })
-        .noUnknown(),
+        .noUnknown()
     },
     show: {
       params: yup
         .object({
-          id: yup.number().required(),
+          id: yup.number().required()
         })
-        .noUnknown(),
+        .noUnknown()
     },
     update: {
       body: yup
         .object({
           match_id: yup.number().required(),
           participant_id: yup.number().required(),
-          is_confirmed: yup.boolean().required(),
-          gols: yup.number().required(),
-          rate: yup.number().required(),
+          gols: yup.number().nullable(),
+          rate: yup.number().nullable()
         })
         .noUnknown(),
       params: yup
         .object({
-          id: yup.number().required(),
+          id: yup.number().required()
+        })
+        .noUnknown()
+    },
+    updateIsConfirmed: {
+      body: yup
+        .object({
+          is_confirmed: yup.boolean().required(),
         })
         .noUnknown(),
+      params: yup
+        .object({
+          id: yup.number().required()
+        })
+        .noUnknown()
     },
     delete: {
       params: yup
         .object({
-          id: yup.number().required(),
+          id: yup.number().required()
         })
-        .noUnknown(),
-    },
+        .noUnknown()
+    }
   };
 
   return schema;

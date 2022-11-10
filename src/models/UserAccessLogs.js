@@ -1,4 +1,4 @@
-import {Sequelize, Model } from "sequelize";
+import { Sequelize, Model } from "sequelize";
 
 export default class UserAccessLogs extends Model {
   static init(sequelize) {
@@ -11,7 +11,6 @@ export default class UserAccessLogs extends Model {
         {
           sequelize,
           timestamps: true,
-          sequelize: sequelize,
         }
       ); 
 

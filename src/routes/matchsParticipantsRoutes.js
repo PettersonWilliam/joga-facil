@@ -18,7 +18,9 @@ export default class MatchsParticipantsRoutes extends BaseRoutes {
         this.router.get('/:id', this.loginRequired, this.SchemaValidator(this.matchsParticipantsSchema.show), this.matchsParticipantsController.show);
 
         this.router.put('/:id', this.loginRequired, this.SchemaValidator(this.matchsParticipantsSchema.update), this.matchsParticipantsController.update);
-        
+
+        this.router.put('/is-confirmed/:id', this.loginRequired, this.SchemaValidator(this.matchsParticipantsSchema.updateIsConfirmed), this.matchsParticipantsController.update);
+
         this.router.delete('/:id', this.loginRequired, this.SchemaValidator(this.matchsParticipantsSchema.delete), this.matchsParticipantsController.delete);
 
         return this.router;

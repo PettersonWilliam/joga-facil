@@ -6,7 +6,6 @@ module.exports = () => {
       body: yup
         .object({
           date: yup.date().required(),
-          status: yup.string().required(),
           started_at: yup.date().required(),
           end_at: yup.string().required(),
           team_amount: yup.number().required()

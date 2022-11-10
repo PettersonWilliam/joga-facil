@@ -17,7 +17,7 @@ export default async (req, res, next) => {
 
     if(!id || !email) {
       return res.status(401).json({
-        errors: ["INVALID TOKEN"],
+        errors: ["Token inválido"],
       });
     }
 

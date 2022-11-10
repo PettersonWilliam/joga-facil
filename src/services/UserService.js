@@ -50,23 +50,23 @@ class UserService {
     async show(id) {
         const user = await User.findOne({
             where: {
-                id,
-                deleted_at: null
+                id
             },
-            paranoid: false,
             attributes: ['name', 'email']
         });
 
         if (!user) {
             throw new Error('usuario não existe.');
         }
-            return user;
+        
+        return user;
     }
 
     async login(data) {
         const user = await User.findOne({
             where: {
-                email: data.email
+                email: data.email,
+                is_blocked: false
             },
             raw: true,
             attributes: ['id', 'name', 'email', 'password']
@@ -114,7 +114,6 @@ class UserService {
             expiresIn: process.env.TOKEN_EXPIRATION
         });
 
-        return login;
     },
 };
 

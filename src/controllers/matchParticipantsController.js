@@ -17,7 +17,6 @@ class MatchParticipantsController extends BaseController {
 
         return this.handleResponse({ matchParticipants } , res);
     } catch (e) {
-      console.log(e);
       return this.handleError({
         message: e
       },req, res);
@@ -65,6 +64,23 @@ class MatchParticipantsController extends BaseController {
       return this.handleError({
         message:'Erro ao atualizar os participantes da partida.'
       },req, res);
+    }
+  }
+
+  async updateIsConfirmed(req,res) {
+    try {
+      const filter = pick(req.filter, ['id']);
+      const changes = pick(req.data, ["is_confirmed"]);
+
+	  const options = { filter, changes };
+
+	  const matchParticipant = await MatchParticipantsService.update(options);
+
+	  return handleResponse({matchParticipant}, res);
+    }catch(e) {
+      return this.handleError({
+        message: "Erro ao atualizar a confirmação da Partida"
+      },req,res);
     }
   }
 

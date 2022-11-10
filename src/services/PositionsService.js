@@ -1,7 +1,18 @@
 import Position from '../models/Position';
 
-class PositionService {
+class PositionsService {
     async create(position) {
+		const ecxistentPosition = await Position.findOne({
+			where: {
+				name: position.name,
+				deleted_at: null
+			},
+			paranoid: false
+		});
+
+		if(ecxistentPosition) {
+			throw new Error('Erro! A posição já existe');
+		}
         return Position.create(position)
     }
 
@@ -32,7 +43,7 @@ class PositionService {
             }
         });
     }
-        
+
     async delete(id) {
         await Position.destroy({
             where: {
@@ -42,6 +53,6 @@ class PositionService {
             paranoid: false
         });
     }
-    
+
 }
-export default new PositionService();
+export default new PositionsService();
