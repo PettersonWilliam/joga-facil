@@ -116,7 +116,8 @@ class MatchsParticipantsService {
       where: {
         id
       }
-    })
+    });
+
    if (!matchParticipant) {
       throw new Error('NÃO EXITE PARTICIPANTE RELACIONADO A UMA PARTIDA.');
     }

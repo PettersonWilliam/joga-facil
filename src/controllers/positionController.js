@@ -20,10 +20,7 @@ class PositionController extends BaseController {
 			return this.handleError(
 				{
 					message: e.message,
-				},
-				req,
-				res
-			);
+				},req,res);
 		}
 	}
 
@@ -36,10 +33,7 @@ class PositionController extends BaseController {
 			return this.handleError(
 				{
 					message: "Erro ao listar posição.",
-				},
-				req,
-				res
-			);
+				},req,res);
 		}
 	}
 
@@ -53,9 +47,7 @@ class PositionController extends BaseController {
 				{
 					message: "Erro ao listar posição.",
 				},
-				req,
-				res
-			);
+				req,res);
 		}
 	}
 
@@ -72,9 +64,7 @@ class PositionController extends BaseController {
 				{
 					message: "Erro ao atualizar posição.",
 				},
-				req,
-				res
-			);
+				req,res);
 		}
 	}
 
@@ -94,9 +84,7 @@ class PositionController extends BaseController {
 				{
 					message: "Erro ao deletar posição.",
 				},
-				req,
-				res
-			);
+				req,res);
 		}
 	}
 }

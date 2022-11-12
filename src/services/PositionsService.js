@@ -1,18 +1,20 @@
 import Position from "../models/Position";
+import { Op, literal } from 'sequelize';
 
 class PositionsService {
 	async create(position) {
 		const ecxistentPosition = await Position.findOne({
 			where: {
-				name: position.name,
+				name: literal(`unaccent("Position"."name") ILIKE unaccent('%${position.name}%')`),
 				deleted_at: null,
 			},
-			paranoid: false,
+			paranoid: false
 		});
 
 		if (ecxistentPosition) {
 			throw new Error("Erro! A posição já existe");
-		}
+		};
+
 		return Position.create(position);
 	}
 
