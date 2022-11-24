@@ -17,10 +17,9 @@ class PositionController extends BaseController {
 
 			return this.handleResponse({ name }, res);
 		} catch (e) {
-			return this.handleError(
-				{
-					message: e.message,
-				},req,res);
+			return this.handleError({
+				message: e.message
+			}, req,res);
 		}
 	}
 
@@ -30,10 +29,9 @@ class PositionController extends BaseController {
 
 			return this.handleResponse({ position }, res);
 		} catch (e) {
-			return this.handleError(
-				{
-					message: "Erro ao listar posição.",
-				},req,res);
+			return this.handleError({
+				message: "Erro ao listar posição.",
+			}, req,res);
 		}
 	}
 

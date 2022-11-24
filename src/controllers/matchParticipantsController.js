@@ -72,7 +72,10 @@ class MatchParticipantsController extends BaseController {
       const filter = pick(req.filter, ['id']);
       const changes = pick(req.data, ["is_confirmed"]);
 
-	  const options = { filter, changes };
+	  const options = {
+		filter: filter,
+		changes: changes
+	};
 
 	  const matchParticipant = await MatchParticipantsService.update(options);
 
