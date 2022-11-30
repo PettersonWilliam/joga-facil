@@ -3,7 +3,12 @@ import Participants from "../models/Participants";
 
 class MatchsService {
   async store(data) {
-    return Matchs.create(data);
+	const matchData = {
+		...data,
+		status: 'OPEN'
+	};
+
+    return Matchs.create(matchData);
   }
 
   index() {
@@ -104,7 +109,7 @@ class MatchsService {
     });
 
     if (!match) {
-      throw new Error("Nao é possivel deletar a partida");
+      throw "Nao é possivel deletar a partida";
     }
 
     await Matchs.destroy({

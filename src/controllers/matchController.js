@@ -16,6 +16,7 @@ class MatchController extends BaseController {
       const novoObjeto = pick(matchCreated, ["id","date","status","started_at","end_at","team_amount"]);
       return this.handleResponse({ novoObjeto }, res);
     } catch (e) {
+		console.log(e);
       return this.handleError("Erro ao criar partida.",req,res);
     }
   }
@@ -87,8 +88,8 @@ class MatchController extends BaseController {
       return this.handleResponse({ userId }, res);
     } catch (e) {
       return this.handleError({
-        message: "Erro! so podemos deletar a partida que esta Aberta."
-      },req,res);
+        message: e
+      }, req,res, 404);
     }
   }
 }

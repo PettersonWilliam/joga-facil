@@ -7,7 +7,7 @@ module.exports = () => {
         .object({
           date: yup.date().required(),
           started_at: yup.date().required(),
-          end_at: yup.string().required(),
+          end_at: yup.date().required(),
           team_amount: yup.number().required()
         })
         .noUnknown()
@@ -24,7 +24,7 @@ module.exports = () => {
         .object({
           date: yup.date().nullable(),
           started_at: yup.date().nullable(),
-          end_at: yup.string().nullable(),
+          end_at: yup.date().nullable(),
           team_amount: yup.number().nullable()
         })
         .noUnknown(),
