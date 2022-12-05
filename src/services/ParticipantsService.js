@@ -48,6 +48,7 @@ class ParticipantsService {
     }
 
     async show(id) {
+
         const participant = await Participants.findOne({
             where: {
                 id,
@@ -62,7 +63,7 @@ class ParticipantsService {
                 }
             }, {
                 model: Position,
-                required: true,
+                required: false,
                 attributes: ['name']
             }],
             paranoid: false,
