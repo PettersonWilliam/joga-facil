@@ -56,7 +56,7 @@ class ParticipantsController extends BaseController {
 
   async delete(req, res) {
     try {
-      
+
       const { id } = req.filter;
 
       if (!id) {

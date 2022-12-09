@@ -14,9 +14,10 @@ class MatchController extends BaseController {
       const matchCreated = await MatchsService.store(req.data);
 
       const novoObjeto = pick(matchCreated, ["id","date","status","started_at","end_at","team_amount"]);
+
       return this.handleResponse({ novoObjeto }, res);
+
     } catch (e) {
-		console.log(e);
       return this.handleError("Erro ao criar partida.",req,res);
     }
   }
@@ -26,6 +27,7 @@ class MatchController extends BaseController {
       const matchs = await MatchsService.index();
 
       return this.handleResponse({ matchs }, res);
+
     } catch (e) {
       return this.handleError({
           message: "Erro ao listar partida."

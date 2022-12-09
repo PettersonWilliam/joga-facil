@@ -11,13 +11,13 @@ class MatchParticipantsController extends BaseController {
 
   async store(req, res) {
     try {
-      const matchParticipants = pick(req.data, ['match_id','participant_id','is_confirmed','gols','rate']);
+      	const matchParticipants = pick(req.data, ['match_id','participant_id','is_confirmed','gols','rate']);
 
         await MatchsParticipantsService.create(matchParticipants);
 
         return this.handleResponse({ matchParticipants } , res);
     } catch (e) {
-      return this.handleError({
+      	return this.handleError({
         message: e
       },req, res);
     }
@@ -37,9 +37,7 @@ class MatchParticipantsController extends BaseController {
 
   async show(req, res) {
     try {
-      const matchParticipant = await MatchsParticipantsService.show(
-        req.filter.id
-      );
+      const matchParticipant = await MatchsParticipantsService.show(req.filter.id);
 
       return this.handleResponse({ matchParticipant } , res);
     } catch (e) {

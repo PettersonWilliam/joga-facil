@@ -4,7 +4,10 @@ import Participants from '../models/Participants';
 
 class ParticipantsService {
     create(data) {
-        return Participants.create(data);
+        return Participants.create(data,{
+			return: true
+		});
+
     }
 
     index() {

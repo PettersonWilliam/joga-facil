@@ -8,7 +8,8 @@ module.exports = () => {
           date: yup.date().required(),
           started_at: yup.date().required(),
           end_at: yup.date().required(),
-          team_amount: yup.number().required()
+          team_amount: yup.number().required(),
+		  participant_ids: yup.array().of(yup.number()).required()
         })
         .noUnknown()
     },
