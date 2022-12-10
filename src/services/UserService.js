@@ -58,7 +58,7 @@ class UserService {
         if (!user) {
             throw new Error('usuario não existe.');
         }
-        
+
         return user;
     }
 
@@ -77,7 +77,7 @@ class UserService {
         }
 
         const isValidPassword = compareSync(data.password, user.password);
-        
+
         if (!isValidPassword) {
             const allowBlockUser = await UserAccessService.checkAccessVerification(user.id);
 
