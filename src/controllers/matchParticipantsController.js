@@ -54,6 +54,8 @@ class MatchParticipantsController extends BaseController {
        changes: pick(req.data,['match_id','participant_id','is_confirmed','gols','rate'])
       }
 
+	  console.log(options);
+
       await MatchsParticipantsService.update(options);
 
 

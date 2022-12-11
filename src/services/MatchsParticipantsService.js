@@ -94,12 +94,14 @@ class MatchsParticipantsService {
 
 }
   async update({ filter, changes })  {
+	console.log(changes);
+
     return MatchsParticipants.update(changes, {
       where: {
         ...filter
       },
     });
-  }
+}
 
   updateIsConfirmed({ filter, changes }) {
 	return MatchsParticipants.update(changes, {

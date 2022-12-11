@@ -7,6 +7,7 @@ module.exports = () => {
         .object({
           match_id: yup.number().required(),
           participant_id: yup.number().required(),
+          is_confirmed: yup.boolean().required(),
           gols: yup.number().required(),
           rate: yup.number().required()
         })
@@ -24,6 +25,7 @@ module.exports = () => {
         .object({
           match_id: yup.number().required(),
           participant_id: yup.number().required(),
+          is_confirmed: yup.boolean().required(),
           gols: yup.number().nullable(),
           rate: yup.number().nullable()
         })

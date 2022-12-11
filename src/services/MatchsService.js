@@ -10,25 +10,7 @@ class MatchsService {
 			status: 'OPEN'
 		};
 
-		const createdMatch = await Matchs.create(matchData);
-
-		if (data.participant_ids) {
-
-			// APÓS TER CRIADO , TEMOS QUE TER UM NOVO ARRAY DE IDS
-			const matchsParticipants =  data.participant_ids.map(id => {
-				return {
-					match_id: createdMatch.id,
-					participant_id: id,
-					is_confirmed: true,
-					gols: 0,
-					rate:10,
-				}
-			});
-			//APÓS TER O NOSSO ARRAY DE OBJETO, ULTILIZAMOS O METODO BULKCREATE => ONDE ELE PERMITE CRIAR VARIAS LINHAS NO NOSSO VANCO DE DADOS
-
-		await MatchsParticipants.bulkCreate(matchsParticipants);
-		}
-
+		return Matchs.create(matchData);
 	}
 
 	index() {
