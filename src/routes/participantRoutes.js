@@ -11,9 +11,9 @@ export default class ParticipantsRoutes extends BaseRoutes {
         this.ParticipantsController = new ParticipantsController();
     }
 
-
     setup() {
-
+        this.router.get('/top-3-gol', this.ParticipantsController.top3gols);
+        this.router.get('/top-3-rate', this.ParticipantsController.top3Rate);
         this.router.post('/', this.SchemaValidator(this.participantsSchema.store), this.ParticipantsController.store);
         this.router.get('/', this.ParticipantsController.index);
         this.router.get('/:id', this.SchemaValidator(this.participantsSchema.show), this.ParticipantsController.show);

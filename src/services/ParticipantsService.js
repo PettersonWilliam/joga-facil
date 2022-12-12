@@ -1,6 +1,8 @@
 import Matchs from '../models/Matchs';
 import Position from '../models/Position';
 import Participants from '../models/Participants';
+import MatchsParticipants from '../models/MatchsParticipants';
+import { literal } from 'Sequelize';
 
 class ParticipantsService {
     create(data) {
@@ -27,6 +29,50 @@ class ParticipantsService {
             paranoid: false
         });
     }
+
+	async top3gols() {
+		return MatchsParticipants.findAll({
+			attributes: [
+				'participant_id',
+				['SUM("MatchsParticipants".gols)', 'gols']
+			],
+            include: {
+                model: Participants,
+                as: 'participant',
+                attributes: ['name']
+            },
+			where: {
+				deleted_at: null
+			},
+			paranoid: false,
+			logging: true,
+            order: [['gols', 'DESC']],
+			group: ['participant_id', 'participant.id'],
+			limit: 3,
+		});
+	}
+
+	async top3Rate() {
+		return MatchsParticipants.findAll({
+			attributes: [
+				'participant_id',
+				['AVG("MatchsParticipants".rate)', 'rate'] //AVG -- AVALIA PELA MÉDIA DE: RATE NOTAS
+			],
+            include: {
+                model: Participants,
+                as: 'participant',
+                attributes: ['name']
+            },
+			where: {
+				deleted_at: null
+			},
+			paranoid: false,
+			logging: true,
+            order: [['rate', 'DESC']],
+			group: ['participant_id', 'participant.id'],
+			limit: 3,
+		});
+	}
 
     async update({ filter, changes })  {
         return Participants.update(changes, {

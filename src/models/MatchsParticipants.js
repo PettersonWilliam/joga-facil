@@ -33,4 +33,8 @@ export default class MatchsParticipants extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.belongsTo(models.Participants, { foreignKey: "participant_id", as: "participant" });
+  }
 }
