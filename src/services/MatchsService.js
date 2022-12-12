@@ -121,8 +121,6 @@ class MatchsService {
 			},
 			paranoid: false
 		});
-
-		return true;
 	}
 }
 export default new MatchsService();

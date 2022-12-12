@@ -45,7 +45,6 @@ class ParticipantsService {
 				deleted_at: null
 			},
 			paranoid: false,
-			logging: true,
             order: [['gols', 'DESC']],
 			group: ['participant_id', 'participant.id'],
 			limit: 3,
@@ -67,7 +66,6 @@ class ParticipantsService {
 				deleted_at: null
 			},
 			paranoid: false,
-			logging: true,
             order: [['rate', 'DESC']],
 			group: ['participant_id', 'participant.id'],
 			limit: 3,

@@ -6,7 +6,6 @@ class ParticipantsController extends BaseController {
   constructor() {
     super();
 
-			console.log(123);
 			this.bindActions(['store','index','show','update','delete', 'top3gols', 'top3Rate']);
   }
   async store(req, res) {
@@ -23,7 +22,7 @@ class ParticipantsController extends BaseController {
 
   async index(req, res) {
     try {
-		const participants =  ParticipantsService.index();
+		const participants =  await ParticipantsService.index();
 
 		return this.handleResponse({participants }, res);
 		} catch (e) {
@@ -61,6 +60,7 @@ class ParticipantsController extends BaseController {
       const participant = await ParticipantsService.show(req.filter.id);
 
       return res.json(participant);
+
     } catch (e) {
       return res.status(400).json({ errors: "participante não existe" });
     }
@@ -75,6 +75,7 @@ class ParticipantsController extends BaseController {
       const participants = await ParticipantsService.update(options);
 
       return res.json(participants);
+
     } catch (e) {
       return res.status(400).json("Erro ao atualizar paricipante.");
     }
@@ -92,6 +93,7 @@ class ParticipantsController extends BaseController {
       const userId = await ParticipantsService.delete(id);
 
       return res.json(userId);
+
     } catch (e) {
       return res.status(400).json("Erro ao deletar usuário.");
     }
