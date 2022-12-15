@@ -39,8 +39,18 @@ class MatchsParticipantsService {
       });
 
       if (matchsParticipants) {
-        throw new Error('O participante nao pode esta na mesma partida por mais de uma vez')
+        throw('O participante nao pode esta na mesma partida por mais de uma vez')
       }
+
+	  const numberParticipants = await MatchsParticipants.count({
+		where: {
+			match_id: data.match_id,
+		}
+	  });
+
+	  if(numberParticipants >= 4) {
+		throw('Número de participantes excedido na partida')
+	  }
 
       const goalKeeperPosition = await Position.findOne({
         where: {
@@ -94,7 +104,6 @@ class MatchsParticipantsService {
 
 }
   async update({ filter, changes })  {
-	console.log(changes);
 
     return MatchsParticipants.update(changes, {
       where: {

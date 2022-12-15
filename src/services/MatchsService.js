@@ -15,15 +15,15 @@ class MatchsService {
 
 	index() {
 		return Matchs.findAll({
-		attributes: ["id","date","status","started_at","end_at","team_amount"],
-		include: {
-			as: "participants",
-			model: Participants
-		},
-		where: {
-			deleted_at: null
-		},
-		paranoid: false
+			attributes: ["id","date","status","started_at","end_at","team_amount"],
+			include: {
+				as: "participants",
+				model: Participants
+			},
+			where: {
+				deleted_at: null
+			},
+			paranoid: false
 		});
 	}
 

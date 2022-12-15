@@ -10,7 +10,7 @@ export default async (req, res, next) => {
     });
   }
 
-  const [, token] = authorization.split(" ");
+  const [, token] = authorization.split(" "); // BEARER
 
   try {
     const { id, email } = jwt.verify(token, process.env.TOKEN_SECRET);

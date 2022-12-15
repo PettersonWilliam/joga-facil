@@ -7,7 +7,7 @@ module.exports = () => {
         .object({
           name: yup.string().required(),
           born: yup.date().nullable(),
-          number: yup.number().nullable(),
+          number: yup.number().min(1).nullable(),
           position_id: yup.number().nullable(),
         })
         .noUnknown(),
