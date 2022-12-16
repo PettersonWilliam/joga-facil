@@ -78,7 +78,6 @@ class UserController extends BaseController {
 
   async login(req, res) {
     try {
-		console.log('ola');
       const data = pick(req.data, ['email', 'password'])
 
       const token = await UserService.login(data);
