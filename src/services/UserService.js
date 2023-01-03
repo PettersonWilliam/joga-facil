@@ -16,7 +16,7 @@ class UserService {
             throw new Error('Usuário já existe');
         }
 
-        return User.create(data);
+        return User(data);
     }
 
     index() {
@@ -68,7 +68,7 @@ class UserService {
                 email: data.email,
                 is_blocked: false
             },
-            raw: true,
+            raw: true, // ele remove todo o “dataValues” que função do sequelize retorna, após ser executada
             attributes: ['id', 'name', 'email', 'password']
         });
 

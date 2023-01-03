@@ -20,11 +20,7 @@ class App {
         const routes = new Routes();
 
         this.app.use(routes.setup());
-        // this.app.use('/user', userRoutes);
-        // this.app.use('/matchs', matchRoutes);
-        // this.app.use('/position', positionRoutes);
-        // this.app.use('/participants', participantRoutes);
-        // this.app.use('/matchs-participants', matchsParticipantsRoutes);
+
     }
 };
 
